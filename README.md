@@ -5,8 +5,8 @@ El objetivo final era identificar el modelo con mejor capacidad predictiva y eva
  
 1.	Análisis Exploratorio de Datos (EDA)
 Dimensiones del dataset:
-●	Filas: 100,000
 
+●	Filas: 100,000
 ●	Columnas: 16
 
 Descripción general del conjunto de datos:
