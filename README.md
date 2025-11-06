@@ -117,4 +117,18 @@ BLANDON TRUJILLO ANGIE TATIANA
 PÉREZ BARRERA ENRIQUE ALBERTO 
 RODRIGUEZ GALAN JIMMY VICENTE 
  (2025)**.  
+
+## Estructura
+```
+.
+├── data/
+│   └── cybersecurity synthesized data.csv
+├── notebooks/
+│   └── cyber_ml_semana2.ipynb
+├── reports/
+│   ├── figures/
+│   └── tables/
+├── .gitignore
+└── README.md
+
 Implementado en **Python** utilizando librerías de **Scikit-learn**, **Pandas**, **NumPy** y **Matplotlib**.
