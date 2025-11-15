@@ -40,8 +40,6 @@ Este trabajo se alinea con la rúbrica del curso en los componentes de:
 
 ## 2. Estructura del repositorio
 
-> **Nota:** Ajustar nombres de archivos según el repositorio final del equipo.
-
 ```text
 .
 .
@@ -73,11 +71,15 @@ Este trabajo se alinea con la rúbrica del curso en los componentes de:
 │   │   └── tables/
 │   ├── cyber_mns_semana3 (modelos no supervisados)/ (nuevo)
 │   │   ├── figures/
-│   │   │   ├── kmeans_clusters.png
-│   │   │   ├── dbscan_resultados.png
-│   │   │   ├── pca_clusters.png
-│   └── └── └── tsne_clusters.png
-│
+│   │   │   ├── Distribuciones de variables numéricas.png
+│   │   │   ├── Gráfico k-distancia para estimar eps (DBSCAN).png
+│   │   │   ├── Método del codo – K-means.png
+│   │   │   ├── PCA (2D) coloreado por clusters DBSCAN.png
+│   │   │   ├── PCA (2D) coloreado por clusters K-means.png
+│   │   │   ├── Silhouette para diferentes k (muestra).png
+│   │   │   ├── Sistemas objetivo.png
+│   │   │   ├── Top tipos de ataque.png
+│   └── └── └── tsne_clusters.pngt-SNE (2D) – muestra coloreada por clusters K-means.png
 ├── old/ (nuevo)
 │   ├── semana2/
 │   └── └── README.md (modificado)
