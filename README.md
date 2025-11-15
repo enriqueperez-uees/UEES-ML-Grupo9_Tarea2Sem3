@@ -1,7 +1,7 @@
 # Taller Colaborativo – Semana 3  
 ## Segmentación de incidentes de ciberseguridad con aprendizaje no supervisado
 
-Este repositorio corresponde al Taller Colaborativo de la **Semana 3** de la asignatura de *Aprendizaje Automático* de la Maestría en Inteligencia Artificial.  
+Este repositorio corresponde al Taller Colaborativo de la **Semana 3** de la asignatura de *Machine Learning* de la Maestría en Inteligencia Artificial.  
 
 El objetivo es aplicar técnicas de **aprendizaje no supervisado** para segmentar incidentes de ciberseguridad y obtener **perfiles de riesgo** que apoyen la toma de decisiones en un entorno tecnológico.
 
@@ -40,9 +40,10 @@ Este trabajo se alinea con la rúbrica del curso en los componentes de:
 
 ## 2. Estructura del repositorio
 
-> 
+> **Nota:** Ajustar nombres de archivos según el repositorio final del equipo.
 
 ```text
+.
 .
 /UEES-ML-Grupo9_Tarea2Sem3/
 │
@@ -100,7 +101,7 @@ Este trabajo se alinea con la rúbrica del curso en los componentes de:
 - **Variables clave para clustering (numéricas)**:
   - `data_compromised_GB`: volumen de datos comprometidos (impacto en confidencialidad).
   - `attack_duration_min`: duración del ataque en minutos (persistencia).
-  - `attack_severity`: nivel cuantitativo de severidad del incidente.
+  - `attack_severity`: nivel cuantitativo de severidad del incidente (1 a 10).
   - `response_time_min`: tiempo de respuesta del equipo de seguridad (eficiencia operativa).
 
 Estas variables permiten describir los incidentes en dos dimensiones fundamentales:
@@ -166,15 +167,16 @@ Este paso es crítico para el correcto funcionamiento de **K-means** y **DBSCAN*
 ### 5.1. K-means
 
 1. **Selección del número de clusters (`k`)**
-   - Se calcula la inercia para valores de `k` en un rango (por ejemplo, 2 a 10) y se gráfica el **método del codo**.
+   - Se calcula la inercia para valores de `k` en un rango de 2 a 10 y se gráfica el **método del codo**.
    - Se calcula el **silhouette score** sobre una muestra del dataset para los mismos valores de `k`.
-   - Con base en ambos criterios se elige un valor:
+   - El mejor compromiso se obtiene con **`k = 8`**, donde:
+     - La inercia sigue disminuyendo, pero la curva del codo entra en una zona de rendimientos decrecientes.
+     - El silhouette score alcanza su valor máximo (~0.226), superior al de valores vecinos de `k`.
 
-> **TODO – ACTUALIZAR:**  
-> “Se seleccionó `k = X` porque presenta un buen compromiso entre baja inercia y un silhouette score aceptable, evitando tanto la sobresegmentación como la agrupación excesiva.”
+   En otras palabras, `k = 8` ofrece un buen equilibrio entre separación de grupos y complejidad del modelo, evitando tanto la sobreagrupación como la fragmentación excesiva.
 
 2. **Entrenamiento del modelo final**
-   - Entrenamiento de `KMeans(n_clusters=k_optimo, random_state=42, n_init=10)`.
+   - Entrenamiento de `KMeans(n_clusters=8, random_state=42, n_init=10)`.
    - Creación de una columna `KMeans_Cluster` en el dataframe original.
 
 3. **Perfilamiento de clusters**
@@ -190,75 +192,63 @@ Este paso es crítico para el correcto funcionamiento de **K-means** y **DBSCAN*
      df.groupby('KMeans_Cluster')['attack_type'].agg(lambda x: x.value_counts().index[0])
      ```
 
-4. **Perfiles de incidentes (ejemplo de estructura)**
+4. **Perfiles de incidentes (macroperfiles)**
 
-> **TODO – ACTUALIZAR CON DATOS REALES**  
-> (Los nombres y descripciones deben adaptarse a los resultados reales; esto es un ejemplo de plantilla.)
+Aunque las medias numéricas son relativamente similares (≈50 GB, ≈150 minutos de duración, ≈90 minutos de respuesta), K-means permite distinguir **macroperfiles** con combinaciones diferentes de severidad e impacto. A un nivel de negocio, estos clusters se pueden reagrupar en:
 
-- **Cluster 0 – Incidentes críticos de alto impacto**  
-  - Severidad: alta.  
-  - Datos comprometidos: altos.  
-  - Duración del ataque: prolongada.  
-  - Tiempo de respuesta: lento.  
-  - Tipo de ataque predominante: [p. ej., Ransomware].  
-  - Interpretación: incidentes de alto riesgo que demandan máxima prioridad.
+- **Incidentes de baja severidad y bajo impacto**, que se asemejan a ruido operativo o intentos contenidos.  
+- **Incidentes de severidad media**, con impacto moderado y tiempos de respuesta razonables, que representan la operación “normal” del SOC.  
+- **Incidentes de alta severidad**, que deben ser priorizados por el equipo de seguridad por su nivel de riesgo, incluso si el volumen de datos y los tiempos promedio son similares.
 
-- **Cluster 1 – Incidentes moderados bien gestionados**  
-  - Severidad: media.  
-  - Datos comprometidos: moderados.  
-  - Duración: intermedia.  
-  - Tiempo de respuesta: relativamente rápido.  
-  - Tipo de ataque predominante: [p. ej., Malware genérico].  
-  - Interpretación: incidentes frecuentes, pero razonablemente controlados.
-
-- **Cluster 2 – Incidentes de bajo impacto / ruido operativo**  
-  - Severidad: baja.  
-  - Datos comprometidos: casi nulos.  
-  - Duración: corta.  
-  - Tiempo de respuesta: rápido.  
-  - Tipo de ataque predominante: [p. ej., escaneos o intentos fallidos].  
-  - Interpretación: eventos de bajo riesgo, útiles para medir el “ruido” del entorno.
-
-- **Cluster 3 – [Nombre según resultados]**  
-  - [Completar con patrones observados].
-
-Esta descripción responde directamente a la pregunta:  
-**¿Qué tipo de perfiles se pueden identificar?**
+Esta descripción responde a la pregunta:  
+**¿Qué tipo de perfiles se pueden identificar?** (desde la perspectiva de K-means).
 
 ### 5.2. DBSCAN
 
 1. **Estimación de `eps` mediante gráfico k-distancia**
-   - Sobre una muestra de tamaño razonable (p. ej., 5 000 registros).
+   - Sobre una muestra de tamaño razonable (5 000 registros).
    - Se calcula la distancia al 5.º vecino y se grafica la curva ordenada.
-   - El “codo” de la curva orienta el valor inicial de `eps`.
+   - El “codo” de la curva orienta el valor inicial de `eps` alrededor de 0.3.
 
 2. **Prueba de combinaciones de hiperparámetros**
-   - Se prueban varias combinaciones de `eps` y `min_samples`.
-   - Para cada combinación se reportan:
-     - Número de clusters encontrados.
-     - Cantidad de puntos marcados como ruido (`-1`).
+   - Se probaron varias combinaciones de `eps` y `min_samples`.
+   - Con `eps` altos (0.5 y 0.7) DBSCAN produjo un solo cluster y 0 ruido → modelo sin capacidad de distinguir estructura.
+   - Con `eps = 0.3` y `min_samples = 20` se obtuvieron 48 clusters y casi 5 000 puntos de ruido → sobrefragmentación.
 
 3. **Selección de parámetros finales**
 
-> **TODO – ACTUALIZAR:**  
-> “Se seleccionó `eps = X` y `min_samples = Y` porque produce Z clusters interpretables y una proporción de ruido de aproximadamente W %, lo que permite identificar incidentes atípicos sin perder la estructura principal de los datos.”
+La configuración elegida fue:
+
+```python
+eps_final = 0.3
+min_samples_final = 10
+```
+
+Con estos valores:
+
+- Se obtuvieron **10 clusters** y solo un **0.05 % de puntos marcados como ruido**, un equilibrio razonable entre número de grupos y cantidad de outliers.
+- Los clusters son suficientemente densos y no se pierde demasiada información en forma de ruido.
 
 4. **Resultados con DBSCAN**
-   - Se crea la columna `DBSCAN_Cluster`.
-   - Se calculan perfiles de cluster (excluyendo `-1`) de forma similar a K-means.
-   - Se calcula la proporción de ruido:
 
-     ```python
-     noise_ratio = (df['DBSCAN_Cluster'] == -1).mean()
-     ```
+Al analizar la tabla de medias, se observa que:
+
+- `data_compromised_GB` se mantiene alrededor de 49–51 GB en todos los clusters.
+- `attack_duration_min` oscila muy ligeramente entre ~149 y 152 minutos.
+- `response_time_min` también es muy estable (~89–92 minutos).
+- La variable que realmente diferencia los clusters es **`attack_severity`**, cuyos valores van de 1 a 10, y prácticamente definen cada grupo.
+
+En la práctica, DBSCAN está segmentando los incidentes por **niveles de severidad**, mientras que las otras variables permanecen casi constantes.
 
 5. **Interpretación**
-   - Los clusters de DBSCAN suelen resaltar:
-     - Grupos densos de incidentes de características muy homogéneas.
-     - Casos en los que K-means pudo mezclar subgrupos.
-   - Los puntos marcados como ruido se interpretan como:
-     - Incidentes **atípicos o extremos** (posibles outliers relevantes).
-     - Registros que no se ajustan a ningún patrón denso claro.
+
+Los clusters de DBSCAN pueden reagruparse en:
+
+- **Perfiles de baja severidad** (severidad 1–3).  
+- **Perfiles de severidad media** (severidad 4–7).  
+- **Perfiles de alta severidad** (severidad 8–10).
+
+Esto refuerza la severidad como indicador dominante del riesgo en este dataset, pero no descubre patrones nuevos en cuanto a duración o tiempos de respuesta.
 
 ---
 
@@ -267,63 +257,65 @@ Esta descripción responde directamente a la pregunta:
 ### 6.1. PCA (Principal Component Analysis)
 
 - Se aplica PCA con 2 componentes principales sobre `X_scaled`.
-- Se reporta el porcentaje de varianza explicada:
+- Las dos primeras componentes capturan una proporción relevante de la varianza, aunque no la totalidad.
+- En el gráfico de **PCA (2D) coloreado por clusters K-means**:
 
-> **TODO – ACTUALIZAR:**  
-> “Las dos primeras componentes principales explican aproximadamente **XX %** de la varianza total.”
-
-- Se generan gráficos 2D de PCA coloreados por:
-  - `KMeans_Cluster`.
-  - `DBSCAN_Cluster`.
-
-Estos gráficos permiten:
-
-- Evaluar visualmente si los clusters están razonablemente separados.
-- Identificar solapamientos o estructuras lineales.
+  - Los incidentes forman una nube continua en forma de elipse.
+  - Algunos clusters tienden a ocupar zonas predominantes del plano, pero existe **solapamiento** entre colores, lo que indica que la estructura no es puramente lineal.
+  - Aun así, PCA ofrece una **visión global** del espacio de incidentes y permite verificar que la asignación de clusters no es completamente aleatoria.
 
 ### 6.2. t-SNE
 
-- Se aplica `TSNE(n_components=2)` sobre una **muestra** del dataset (p. ej., 5 000 registros) por temas de costo computacional.
-- Se grafica el resultado 2D coloreado por `KMeans_Cluster`.
+- Se aplica `TSNE(n_components=2)` sobre una muestra de 5 000 registros por temas de costo computacional.
+- En el gráfico de **t-SNE (2D) coloreado por clusters K-means**:
 
-t-SNE ayuda a:
+  - Los 8 clusters aparecen como **“islas” bien definidas**, con muy poco solapamiento.
+  - Incidentes del mismo cluster se agrupan en regiones compactas, mientras que incidentes de clusters diferentes quedan claramente separados.
 
-- Explorar estructuras **no lineales**.
-- Detectar subgrupos dentro de un mismo cluster de K-means.
-- Validar si los clusters capturan patrones locales de forma coherente.
+- t-SNE, por lo tanto, proporciona una **validación visual fuerte** de que los 8 clusters de K-means representan grupos coherentes en términos de vecindad local.
+
+### 6.3. Rol conjunto de PCA y t-SNE
+
+- **PCA** ayuda a entender cómo se distribuyen los incidentes en el espacio de mayor varianza y a comprobar que, aunque la separación no es perfecta, los clusters de K-means tienen cierta estructura.  
+- **t-SNE** enfatiza la separación local entre grupos y muestra que los clusters encontrados por K-means forman grupos consistentes.
+
+En conjunto, ambas técnicas respaldan la elección de `k = 8` y la validez cualitativa de los perfiles de incidentes definidos.
 
 ---
 
 ## 7. Comparación de modelos y uso de visualizaciones
 
-### 7.1. Diferencias clave entre K-means y DBSCAN
-
-En este caso:
+### 7.1. Diferencias clave entre K-means y DBSCAN en este dataset
 
 - **K-means**:
   - Requiere especificar el número de clusters `k`.
-  - Produce clusters de tamaño relativamente similar y forma aproximadamente esférica.
-  - Es adecuado para obtener una **segmentación estable** de niveles de riesgo/impacto.
+  - Produce 8 clusters de tamaño relativamente similar y forma aproximadamente esférica.
+  - Construye **macroperfiles** que combinan varios niveles de severidad, datos comprometidos, duración y tiempos de respuesta.
+  - Es útil para obtener una **segmentación operativa compacta**, fácil de comunicar y emplear en la priorización de incidentes.
 
 - **DBSCAN**:
-  - No requiere fijar `k`, pero sí elegir `eps` y `min_samples`.
-  - Identifica clusters de distinta densidad y marca **ruido**.
-  - Es útil para detectar incidentes **atípicos o muy específicos** que K-means podría diluir en clusters grandes.
+  - No requiere fijar `k`, pero es muy sensible a `eps` y `min_samples`.
+  - Con la configuración seleccionada (`eps = 0.3`, `min_samples = 10`) genera 10 clusters y casi nada de ruido.
+  - En este dataset termina agrupando principalmente por **severidad**, ya que las demás variables son muy homogéneas entre grupos.
+  - Resulta útil para **estratificar** el conjunto de incidentes por niveles de severidad, pero aporta poco en términos de descubrimiento de nuevas estructuras de impacto/duración.
 
-> **TODO – ACTUALIZAR:**  
-> Incluir 1–2 ejemplos concretos de cómo difieren los agrupamientos para este dataset según los resultados reales del equipo.
+En síntesis:
+
+- K-means ofrece una visión más **agregada y práctica** de los incidentes para la gestión diaria.
+- DBSCAN refuerza la importancia de la **severidad** como variable dominante, pero no introduce perfiles cualitativamente nuevos.
 
 ### 7.2. Rol de las visualizaciones
 
-Las visualizaciones (histogramas, gráficos de barras, PCA 2D, t-SNE 2D, curvas de codo y silhouette) se utilizan para:
+Las visualizaciones (distribuciones, curvas de codo y silhouette, PCA 2D, t-SNE 2D, tablas de medias por cluster) se utilizaron para:
 
-- **Justificar decisiones técnicas** (elección de `k`, selección de hiperparámetros en DBSCAN).
-- **Comunicar hallazgos** a una audiencia no técnica:
-  - Perfiles de incidentes.
-  - Diferencias de severidad, pérdida de datos y tiempos de respuesta.
-  - Presencia de incidentes atípicos.
+- **Justificar decisiones técnicas**:
+  - Elección de `k = 8` en K-means.
+  - Selección de `eps = 0.3` y `min_samples = 10` en DBSCAN.
+- **Comunicar hallazgos** de forma clara:
+  - Perfilamiento de incidentes por niveles de severidad y riesgo.
+  - Confirmación visual de la coherencia de los clusters.
 
-Estas visualizaciones se integran en la **presentación oral / en video** de 5–10 minutos exigida en el taller.
+Estas visualizaciones se integran en la **presentación técnica de 8 minutos** requerida en el taller.
 
 ---
 
@@ -331,23 +323,51 @@ Estas visualizaciones se integran en la **presentación oral / en video** de 5�
 
 Entre las principales limitaciones identificadas:
 
-- El dataset es **sintético**, por lo que puede no reflejar todas las complejidades de un entorno real de ciberseguridad.
-- El clustering se realizó principalmente con **variables numéricas**; las variables categóricas se usaron solo para interpretación.
-- Los modelos son sensibles a:
-  - Escala de las variables (resuelto parcialmente con estandarización).
-  - Selección de hiperparámetros (`k`, `eps`, `min_samples`).
-- Técnicas como t-SNE y el cálculo del silhouette score pueden ser **costosos** en grandes volúmenes de datos.
+1. **Dataset sintético y homogéneo**
 
-Posibles mejoras futuras:
+   - Las medias de `data_compromised_GB`, `attack_duration_min` y `response_time_min` son muy similares entre clusters.
+   - Esto limita la capacidad de los algoritmos para encontrar grupos muy diferenciados y hace que la segmentación esté dominada por `attack_severity`.
 
-- Integrar variables categóricas mediante **codificación one-hot** y evaluar su impacto en la calidad de los clusters.
-- Probar otros algoritmos de clustering (p. ej., Gaussian Mixture Models, HDBSCAN).
-- Incorporar métricas de negocio (pérdida económica, impacto en SLA) para redefinir los perfiles en términos de riesgo operativo.
-- Validar los resultados con **expertos en ciberseguridad** y con datos reales de una organización.
+   **Posible solución:**  
+   Trabajar con un dataset real o con datos sintéticos que incorporen mayor variabilidad en impacto, duración y tiempos de respuesta.
+
+2. **Uso exclusivo de variables numéricas**
+
+   - Las variables categóricas (`attack_type`, `target_system`, `industry`, etc.) se usaron solo para interpretación.
+   - Esto puede ocultar patrones relevantes, por ejemplo, ataques específicos a ciertos sistemas.
+
+   **Posible solución:**  
+   Incluir estas variables en el vector de características mediante **codificación one-hot** y reentrenar los modelos para evaluar si mejoran la interpretabilidad de los clusters.
+
+3. **Sensibilidad a hiperparámetros y métricas moderadas**
+
+   - El silhouette score de K-means es moderado (~0.22), lo que indica una separación correcta, pero no excelente.
+   - DBSCAN es muy sensible a pequeñas variaciones de `eps` y `min_samples`.
+
+   **Posible solución:**  
+   Explorar sistemáticamente rejillas de hiperparámetros y considerar otros algoritmos de clustering (Gaussian Mixture Models, clustering jerárquico, HDBSCAN).
+
+4. **Falta de validación con expertos de dominio**
+
+   - La interpretación de perfiles se basa solo en estadísticas y visualizaciones.
+
+   **Posible solución:**  
+   Presentar los resultados a analistas de seguridad (SOC, CSIRT), recoger retroalimentación y ajustar la definición de perfiles y variables a partir de su experiencia.
 
 ---
 
-## 9. Referencias
+## 9. Conclusiones principales
+
+- Es posible segmentar los incidentes de ciberseguridad en **perfiles de riesgo** utilizando técnicas de clustering, incluso sobre un dataset sintético.
+- **K-means con 8 clusters** proporciona una segmentación operativa en macroperfiles que combinan severidad, datos comprometidos, duración y tiempos de respuesta.  
+- **DBSCAN** refuerza principalmente la **estratificación por severidad**, mostrando que esta variable es la que realmente domina la estructura del dataset.  
+- **PCA** y **t-SNE** son herramientas complementarias para validar y comunicar visualmente la calidad de los clusters.
+
+Aun con sus limitaciones, este enfoque de aprendizaje no supervisado puede servir como base para sistemas de priorización de incidentes de ciberseguridad y para el diseño de estrategias de respuesta diferenciadas.
+
+---
+
+## 10. Referencias
 
 Habeeb, M. (s. f.). *Cybersecurity Incident Dataset* [Conjunto de datos]. Kaggle. https://www.kaggle.com/datasets/mustafahabeeb90/cybersecurity-incident-dataset  
 
