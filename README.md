@@ -40,7 +40,7 @@ Este trabajo se alinea con la rúbrica del curso en los componentes de:
 
 ## 2. Estructura del repositorio
 
-> **Nota:** Ajustar nombres de archivos según el repositorio final del equipo.
+> 
 
 ```text
 .
