@@ -1,134 +1,354 @@
-# Predicción de Incidentes de Ciberseguridad mediante Modelos de Clasificación Supervisada
+# Taller Colaborativo – Semana 3  
+## Segmentación de incidentes de ciberseguridad con aprendizaje no supervisado
 
-## Descripción General
+Este repositorio corresponde al Taller Colaborativo de la **Semana 3** de la asignatura de *Aprendizaje Automático* de la Maestría en Inteligencia Artificial.  
 
-El propósito de este proyecto es desarrollar, entrenar y comparar distintos modelos de clasificación supervisada aplicados a un conjunto de datos técnicos relacionados con incidentes de ciberseguridad.  
-El objetivo principal fue identificar el modelo con mejor capacidad predictiva y evaluar su rendimiento utilizando métricas estándar de clasificación: Accuracy, Precision, Recall y F1-Score.
-
----
-
-## 1. Conjunto de Datos
-
-- Filas: 100,000  
-- Columnas: 16  
-- Origen: Dataset simulado con registros de ataques cibernéticos.  
-
-### Variables principales
-- Categóricas: `attack_type`, `target_system`, `result`, `security_tools_used`, `user_role`, `location`, `industry`, `mitigation_method`
-- Numéricas: `data_compromised_GB`, `attack_duration_min`, `attack_severity`, `response_time_min`
-- Variable objetivo: `mes` (mes del incidente, valores 1–12)
-
-### Observaciones clave del EDA
-- Sin valores nulos ni atípicos significativos.  
-- Distribuciones uniformes, tanto en variables numéricas como categóricas.  
-- Bajas correlaciones entre variables numéricas (independencia entre atributos).  
-- Distribución balanceada entre los 12 meses, sin sesgos temporales marcados.  
-- Los datos parecen sintéticos y equilibrados artificialmente, lo que reduce la presencia de patrones fuertes.
+El objetivo es aplicar técnicas de **aprendizaje no supervisado** para segmentar incidentes de ciberseguridad y obtener **perfiles de riesgo** que apoyen la toma de decisiones en un entorno tecnológico.
 
 ---
 
-## 2. Metodología
+## 1. Contexto y objetivo
 
-### 2.1. Preprocesamiento
-- Codificación de variables categóricas: `OneHotEncoder`  
-- Escalado de variables numéricas: `MinMaxScaler`  
-- Eliminación de columnas irrelevantes: IPs y marcas de tiempo  
-- Uso de un pipeline de Scikit-learn que integra preprocesamiento y modelo en un flujo reproducible.  
+Se trabaja con el dataset sintético **Cybersecurity Incident Dataset** publicado en Kaggle (Habeeb, s. f.), que describe incidentes de ciberseguridad con variables como:
 
-### 2.2. Modelos Implementados
-1. **Árbol de Decisión (`DecisionTreeClassifier`)**  
-   - Parámetros óptimos: `max_depth=20`, `min_samples_split=5`  
-   - F1-score promedio: 0.507  
+- Tipo de ataque: `attack_type` (p. ej., Phishing, Malware, DDoS, Ransomware).  
+- Sistema objetivo: `target_system` (p. ej., Cloud, On-premise, IoT, Mobile).  
+- Resultado del incidente: `outcome` (Success/Failure).  
+- Datos comprometidos: `data_compromised_GB`.  
+- Duración del ataque: `attack_duration_min`.  
+- Severidad: `attack_severity`.  
+- Tiempo de respuesta: `response_time_min`.  
+- Variables de contexto: industria, ubicación, herramientas de seguridad, método de mitigación, entre otras.
 
-2. **SVM Lineal (`LinearSVC`)**  
-   - Parámetros óptimos: `kernel='linear'`, `C=0.1`, `gamma='scale'`  
-   - F1-score promedio: 0.513 (mejor resultado)  
+**Objetivo del taller**
 
-3. **Random Forest (`RandomForestClassifier`)**  
-   - Parámetros óptimos: `n_estimators=50`, `max_depth=10`, `min_samples_split=2`  
-   - F1-score promedio: 0.507  
+- Implementar y analizar los modelos:
+  - **K-means** y **DBSCAN** para clustering.
+  - **PCA** y **t-SNE** para reducción y visualización en 2D.
+- Identificar **perfiles de incidentes** en función de impacto y gestión.
+- Comparar los métodos y comunicar conclusiones de forma técnica y visual.
 
-### 2.3. Evaluación
-Se utilizó validación cruzada (k=3) y las métricas:  
-- Accuracy: proporción de aciertos totales.  
-- Precision: confiabilidad de predicciones positivas.  
-- Recall: capacidad para detectar casos positivos reales.  
-- F1-Score: equilibrio entre precisión y recall.  
+Este trabajo se alinea con la rúbrica del curso en los componentes de:
 
----
-
-## 3. Resultados Comparativos
-
-| Modelo             | Accuracy | Precision | Recall | F1-Score |
-|--------------------|-----------|------------|---------|-----------|
-| Árbol de Decisión  | 0.501     | 0.502      | 0.502   | 0.499     |
-| SVM (Lineal)       | 0.497     | 0.497      | 0.497   | 0.495     |
-| Random Forest      | 0.498     | 0.498      | 0.498   | 0.496     |
-
-**Conclusiones de desempeño:**
-- Los tres modelos obtuvieron métricas similares (~0.50).  
-- El SVM lineal fue ligeramente superior en F1-score (0.513 en validación cruzada).  
-- Los resultados sugieren que los datos no presentan patrones fuertes que permitan una separación efectiva entre clases.
+- Análisis y limpieza del dataset.  
+- Implementación de K-means y DBSCAN.  
+- Aplicación de PCA/t-SNE.  
+- Visualización y segmentación de perfiles.  
+- Análisis crítico y propuestas de uso.
 
 ---
 
-## 4. Interpretación y Análisis
+## 2. Estructura del repositorio
 
-- Los datos equilibrados y sin correlaciones significativas limitan la capacidad de discriminación entre clases.  
-- Rendimientos cercanos al azar (~50%) indican que el conjunto de datos carece de estructura predictiva clara.  
-- Los modelos son robustos pero limitados por la naturaleza del dataset.  
-- Árbol de Decisión: modelo más interpretable y equilibrado.  
-- SVM Lineal: mejor rendimiento general, aunque con mayor costo computacional.  
-- Random Forest: estable, pero sin mejoras sustanciales frente al árbol individual.
+> **Nota:** Ajustar nombres de archivos según el repositorio final del equipo.
 
----
-
-## 5. Conclusiones Finales
-
-- Los tres modelos mostraron rendimiento similar al azar, evidenciando la limitada capacidad predictiva del dataset.  
-- La metodología (EDA, pipeline, validación cruzada, optimización de hiperparámetros) es correcta y replicable para futuros conjuntos de datos.  
-- Se recomienda:  
-  - Aplicar ingeniería de características o seleccionar nuevas variables.  
-  - Probar modelos basados en boosting (XGBoost, LightGBM).  
-  - Considerar aumento de datos o simulaciones más realistas.
-
----
-
-## 6. Reflexión Técnica
-
-Este proyecto permitió:
-- Comprender la importancia del preprocesamiento y la correcta transformación de datos.  
-- Evidenciar que la calidad y relevancia de las variables influye más que la complejidad del modelo.  
-- Destacar el uso de pipelines como herramienta esencial para garantizar reproducibilidad y eficiencia.  
-
-**Modelos comparados:**  
-- Árbol de Decisión: interpretabilidad.  
-- SVM: capacidad de generalización.  
-- Random Forest: estabilidad y robustez.  
-
-En conjunto, este trabajo demuestra que el proceso de modelado supervisado debe acompañarse de una revisión crítica del valor informativo de las variables para alcanzar un rendimiento predictivo superior.
-
----
-
-## 7. Autor
-Proyecto desarrollado con fines académicos por 
-**AGUIRRE PENAFIEL FREDY MESIAS  
-BLANDON TRUJILLO ANGIE TATIANA
-PÉREZ BARRERA ENRIQUE ALBERTO 
-RODRIGUEZ GALAN JIMMY VICENTE 
- (2025)**.  
-
-## Estructura
-```
+```text
 .
+/UEES-ML-Grupo9_Tarea2Sem3/
+│
 ├── data/
 │   └── cybersecurity synthesized data.csv
+│
 ├── notebooks/
-│   └── cyber_ml_semana2.ipynb
+│   ├── cyber_ml_semana2.ipynb
+│   └── cyber_mns_semana3.ipynb (nuevo)
+│
 ├── reports/
-│   ├── figures/
-│   └── tables/
-├── .gitignore
-└── README.md
+│   ├── cyber_ml_semana2 (modelos supervisados)/ (mover)
+│   │   ├── figures/
+│   │   │   ├── 1_RelacionesEntreVariablesNumericasYTipoAtaque.png
+│   │   │   ├── 2_DistribucionesNumericas.png
+│   │   │   ├── 3_BoxplotsVariablesNumericas.png
+│   │   │   ├── 4_CorrelacionesNumericas.png
+│   │   │   ├── 5_FrecuenciaTiposAtaque.png
+│   │   │   ├── 6_resultadosAtaques.png
+│   │   │   ├── 7_Top10UbicacionesAfectadas.png
+│   │   │   ├── 8_Top10IndustriasAfectadas.png
+│   │   │   ├── 9_DuracionAtaquePorTipo.png
+│   │   │   ├── 10_SeveridadAtaque.png
+│   │   │   ├── 11_CantidadAtaquesPorMes.png
+│   │   │   ├── 12_MatrizConfusion.png
+│   │   │   └── 13_ComparacionModelos.png
+│   │   └── tables/
+│   ├── cyber_mns_semana3 (modelos no supervisados)/ (nuevo)
+│   │   ├── figures/
+│   │   │   ├── kmeans_clusters.png
+│   │   │   ├── dbscan_resultados.png
+│   │   │   ├── pca_clusters.png
+│   └── └── └── tsne_clusters.png
+│
+├── old/ (nuevo)
+│   ├── semana2/
+│   └── └── README.md (modificado)
+│
+├── README.md (modificar)
 
-Implementado en **Python** utilizando librerías de **Scikit-learn**, **Pandas**, **NumPy** y **Matplotlib**.
+```
+
+- `data/`: contiene el archivo CSV con los incidentes sintetizados.
+- `notebooks/`: incluye el notebook principal con todo el flujo (EDA, modelos, visualización).
+- `figures/`: almacena las imágenes exportadas utilizadas en la presentación.
+- `README.md`: documentación técnica, justificación y síntesis de resultados.
+
+---
+
+## 3. Dataset utilizado
+
+- **Fuente**: Kaggle – *Cybersecurity Incident Dataset* (Habeeb, s. f.).  
+- **Tipo**: datos sintéticos que simulan incidentes reales de ciberseguridad.
+- **Granularidad**: cada fila representa un incidente individual.
+- **Variables clave para clustering (numéricas)**:
+  - `data_compromised_GB`: volumen de datos comprometidos (impacto en confidencialidad).
+  - `attack_duration_min`: duración del ataque en minutos (persistencia).
+  - `attack_severity`: nivel cuantitativo de severidad del incidente.
+  - `response_time_min`: tiempo de respuesta del equipo de seguridad (eficiencia operativa).
+
+Estas variables permiten describir los incidentes en dos dimensiones fundamentales:
+
+1. **Impacto del ataque** (cantidad de datos y severidad).  
+2. **Gestión del incidente** (duración y tiempo de respuesta).
+
+Las variables categóricas (`attack_type`, `target_system`, `industry`, etc.) se utilizan como **contexto** para interpretar los clusters obtenidos.
+
+---
+
+## 4. Metodología
+
+La metodología sigue el flujo recomendado en el curso y en la documentación de *scikit-learn* (scikit-learn developers, 2024):
+
+### 4.1. Análisis exploratorio y limpieza (EDA)
+
+En el notebook se realizan las siguientes etapas:
+
+1. **Exploración inicial**
+   - `df.shape`, `df.info()`, `df.describe()` para conocer tamaño, tipos de datos y estadísticas básicas.
+   - Identificación de columnas numéricas y categóricas.
+
+2. **Valores faltantes**
+   - Cálculo de `df.isna().sum()` por columna.
+   - Decisiones explícitas sobre tratamiento de nulos:  
+     - Eliminación de filas/columnas irrelevantes o con alta proporción de nulos.  
+     - Mantenimiento de columnas cuando el impacto es mínimo.  
+   - Justificación de las decisiones en el notebook.
+
+3. **Distribución de variables numéricas**
+   - Histogramas para `data_compromised_GB`, `attack_duration_min`, `attack_severity`, `response_time_min`.
+   - Comentario sobre sesgos, presencia de outliers y su impacto potencial en algoritmos basados en distancia.
+
+4. **Exploración de variables categóricas**
+   - Gráficos de barras para:
+     - Tipos de ataque más frecuentes (`attack_type`).  
+     - Sistemas objetivo (`target_system`).  
+   - Descripción de patrones relevantes (p. ej., predominio de cierto tipo de ataque o sistema objetivo).
+
+5. **Selección de variables para clustering**
+   - Se priorizan las variables numéricas relacionadas con:
+     - Impacto del incidente.
+     - Duración y tiempo de respuesta.
+   - Otras variables (IPs, identificadores, timestamp crudo) se consideran poco informativas para la segmentación y se excluyen del vector de características.
+
+### 4.2. Preparación de datos
+
+- **Escalado de variables**  
+  Se aplica `StandardScaler` a las variables numéricas seleccionadas para evitar que diferencias de escala dominen el cálculo de distancias:
+
+```python
+scaler = StandardScaler()
+X_scaled = scaler.fit_transform(X)
+```
+
+Este paso es crítico para el correcto funcionamiento de **K-means** y **DBSCAN**.
+
+---
+
+## 5. Modelos de clustering
+
+### 5.1. K-means
+
+1. **Selección del número de clusters (`k`)**
+   - Se calcula la inercia para valores de `k` en un rango (por ejemplo, 2 a 10) y se gráfica el **método del codo**.
+   - Se calcula el **silhouette score** sobre una muestra del dataset para los mismos valores de `k`.
+   - Con base en ambos criterios se elige un valor:
+
+> **TODO – ACTUALIZAR:**  
+> “Se seleccionó `k = X` porque presenta un buen compromiso entre baja inercia y un silhouette score aceptable, evitando tanto la sobresegmentación como la agrupación excesiva.”
+
+2. **Entrenamiento del modelo final**
+   - Entrenamiento de `KMeans(n_clusters=k_optimo, random_state=42, n_init=10)`.
+   - Creación de una columna `KMeans_Cluster` en el dataframe original.
+
+3. **Perfilamiento de clusters**
+   - Cálculo de medias por cluster para las variables numéricas:
+
+     ```python
+     df.groupby('KMeans_Cluster')[features].mean()
+     ```
+
+   - Identificación del tipo de ataque más frecuente por cluster:
+
+     ```python
+     df.groupby('KMeans_Cluster')['attack_type'].agg(lambda x: x.value_counts().index[0])
+     ```
+
+4. **Perfiles de incidentes (ejemplo de estructura)**
+
+> **TODO – ACTUALIZAR CON DATOS REALES**  
+> (Los nombres y descripciones deben adaptarse a los resultados reales; esto es un ejemplo de plantilla.)
+
+- **Cluster 0 – Incidentes críticos de alto impacto**  
+  - Severidad: alta.  
+  - Datos comprometidos: altos.  
+  - Duración del ataque: prolongada.  
+  - Tiempo de respuesta: lento.  
+  - Tipo de ataque predominante: [p. ej., Ransomware].  
+  - Interpretación: incidentes de alto riesgo que demandan máxima prioridad.
+
+- **Cluster 1 – Incidentes moderados bien gestionados**  
+  - Severidad: media.  
+  - Datos comprometidos: moderados.  
+  - Duración: intermedia.  
+  - Tiempo de respuesta: relativamente rápido.  
+  - Tipo de ataque predominante: [p. ej., Malware genérico].  
+  - Interpretación: incidentes frecuentes, pero razonablemente controlados.
+
+- **Cluster 2 – Incidentes de bajo impacto / ruido operativo**  
+  - Severidad: baja.  
+  - Datos comprometidos: casi nulos.  
+  - Duración: corta.  
+  - Tiempo de respuesta: rápido.  
+  - Tipo de ataque predominante: [p. ej., escaneos o intentos fallidos].  
+  - Interpretación: eventos de bajo riesgo, útiles para medir el “ruido” del entorno.
+
+- **Cluster 3 – [Nombre según resultados]**  
+  - [Completar con patrones observados].
+
+Esta descripción responde directamente a la pregunta:  
+**¿Qué tipo de perfiles se pueden identificar?**
+
+### 5.2. DBSCAN
+
+1. **Estimación de `eps` mediante gráfico k-distancia**
+   - Sobre una muestra de tamaño razonable (p. ej., 5 000 registros).
+   - Se calcula la distancia al 5.º vecino y se grafica la curva ordenada.
+   - El “codo” de la curva orienta el valor inicial de `eps`.
+
+2. **Prueba de combinaciones de hiperparámetros**
+   - Se prueban varias combinaciones de `eps` y `min_samples`.
+   - Para cada combinación se reportan:
+     - Número de clusters encontrados.
+     - Cantidad de puntos marcados como ruido (`-1`).
+
+3. **Selección de parámetros finales**
+
+> **TODO – ACTUALIZAR:**  
+> “Se seleccionó `eps = X` y `min_samples = Y` porque produce Z clusters interpretables y una proporción de ruido de aproximadamente W %, lo que permite identificar incidentes atípicos sin perder la estructura principal de los datos.”
+
+4. **Resultados con DBSCAN**
+   - Se crea la columna `DBSCAN_Cluster`.
+   - Se calculan perfiles de cluster (excluyendo `-1`) de forma similar a K-means.
+   - Se calcula la proporción de ruido:
+
+     ```python
+     noise_ratio = (df['DBSCAN_Cluster'] == -1).mean()
+     ```
+
+5. **Interpretación**
+   - Los clusters de DBSCAN suelen resaltar:
+     - Grupos densos de incidentes de características muy homogéneas.
+     - Casos en los que K-means pudo mezclar subgrupos.
+   - Los puntos marcados como ruido se interpretan como:
+     - Incidentes **atípicos o extremos** (posibles outliers relevantes).
+     - Registros que no se ajustan a ningún patrón denso claro.
+
+---
+
+## 6. Reducción y visualización: PCA y t-SNE
+
+### 6.1. PCA (Principal Component Analysis)
+
+- Se aplica PCA con 2 componentes principales sobre `X_scaled`.
+- Se reporta el porcentaje de varianza explicada:
+
+> **TODO – ACTUALIZAR:**  
+> “Las dos primeras componentes principales explican aproximadamente **XX %** de la varianza total.”
+
+- Se generan gráficos 2D de PCA coloreados por:
+  - `KMeans_Cluster`.
+  - `DBSCAN_Cluster`.
+
+Estos gráficos permiten:
+
+- Evaluar visualmente si los clusters están razonablemente separados.
+- Identificar solapamientos o estructuras lineales.
+
+### 6.2. t-SNE
+
+- Se aplica `TSNE(n_components=2)` sobre una **muestra** del dataset (p. ej., 5 000 registros) por temas de costo computacional.
+- Se grafica el resultado 2D coloreado por `KMeans_Cluster`.
+
+t-SNE ayuda a:
+
+- Explorar estructuras **no lineales**.
+- Detectar subgrupos dentro de un mismo cluster de K-means.
+- Validar si los clusters capturan patrones locales de forma coherente.
+
+---
+
+## 7. Comparación de modelos y uso de visualizaciones
+
+### 7.1. Diferencias clave entre K-means y DBSCAN
+
+En este caso:
+
+- **K-means**:
+  - Requiere especificar el número de clusters `k`.
+  - Produce clusters de tamaño relativamente similar y forma aproximadamente esférica.
+  - Es adecuado para obtener una **segmentación estable** de niveles de riesgo/impacto.
+
+- **DBSCAN**:
+  - No requiere fijar `k`, pero sí elegir `eps` y `min_samples`.
+  - Identifica clusters de distinta densidad y marca **ruido**.
+  - Es útil para detectar incidentes **atípicos o muy específicos** que K-means podría diluir en clusters grandes.
+
+> **TODO – ACTUALIZAR:**  
+> Incluir 1–2 ejemplos concretos de cómo difieren los agrupamientos para este dataset según los resultados reales del equipo.
+
+### 7.2. Rol de las visualizaciones
+
+Las visualizaciones (histogramas, gráficos de barras, PCA 2D, t-SNE 2D, curvas de codo y silhouette) se utilizan para:
+
+- **Justificar decisiones técnicas** (elección de `k`, selección de hiperparámetros en DBSCAN).
+- **Comunicar hallazgos** a una audiencia no técnica:
+  - Perfiles de incidentes.
+  - Diferencias de severidad, pérdida de datos y tiempos de respuesta.
+  - Presencia de incidentes atípicos.
+
+Estas visualizaciones se integran en la **presentación oral / en video** de 5–10 minutos exigida en el taller.
+
+---
+
+## 8. Limitaciones y trabajo futuro
+
+Entre las principales limitaciones identificadas:
+
+- El dataset es **sintético**, por lo que puede no reflejar todas las complejidades de un entorno real de ciberseguridad.
+- El clustering se realizó principalmente con **variables numéricas**; las variables categóricas se usaron solo para interpretación.
+- Los modelos son sensibles a:
+  - Escala de las variables (resuelto parcialmente con estandarización).
+  - Selección de hiperparámetros (`k`, `eps`, `min_samples`).
+- Técnicas como t-SNE y el cálculo del silhouette score pueden ser **costosos** en grandes volúmenes de datos.
+
+Posibles mejoras futuras:
+
+- Integrar variables categóricas mediante **codificación one-hot** y evaluar su impacto en la calidad de los clusters.
+- Probar otros algoritmos de clustering (p. ej., Gaussian Mixture Models, HDBSCAN).
+- Incorporar métricas de negocio (pérdida económica, impacto en SLA) para redefinir los perfiles en términos de riesgo operativo.
+- Validar los resultados con **expertos en ciberseguridad** y con datos reales de una organización.
+
+---
+
+## 9. Referencias
+
+Habeeb, M. (s. f.). *Cybersecurity Incident Dataset* [Conjunto de datos]. Kaggle. https://www.kaggle.com/datasets/mustafahabeeb90/cybersecurity-incident-dataset  
+
+scikit-learn developers. (2024). *User guide: Clustering*. Scikit-learn. https://scikit-learn.org/stable/modules/clustering.html  
