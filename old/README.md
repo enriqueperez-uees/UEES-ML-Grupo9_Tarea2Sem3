@@ -121,14 +121,51 @@ RODRIGUEZ GALAN JIMMY VICENTE
 ## Estructura
 ```
 .
+/UEES-ML-Grupo9_Tarea2Sem3/
+│
 ├── data/
 │   └── cybersecurity synthesized data.csv
+│
 ├── notebooks/
-│   └── cyber_ml_semana2.ipynb
+│   ├── cyber_ml_semana2.ipynb
+│   ├── cyber_mns_semana3.ipynb.ipynb
+│   └── cyber_ml_semana4_xai_y_sesgos.ipynb (nuevo)
+│
 ├── reports/
-│   ├── figures/
-│   └── tables/
-├── .gitignore
-└── README.md
+│   ├── cyber_ml_semana4_xai_y_sesgos/ (nuevo)
+│   │   ├── figures/
+│   │   │   ├── 1_DistribucionVariableObjetivo.png
+│   │   │   ├── 2_MatrizConfusionRandomForest.png
+│   │   │   ├── 3_TopCaracteristicasRF.png
+│   │   │   ├── 4_SHAP summary plot.png
+│   └── └── └── 5_SHAP dependence plot.png
+│   ├── cyber_mns_semana3 (modelos no supervisados)/
+│   │   ├── figures/
+│   │   │   ├── kmeans_clusters.png
+│   │   │   ├── dbscan_resultados.png
+│   │   │   ├── pca_clusters.png
+│   └── └── └── tsne_clusters.png
+│   ├── cyber_ml_semana2 (modelos supervisados)/
+│   │   ├── figures/
+│   │   │   ├── 1_RelacionesEntreVariablesNumericasYTipoAtaque.png
+│   │   │   ├── 2_DistribucionesNumericas.png
+│   │   │   ├── 3_BoxplotsVariablesNumericas.png
+│   │   │   ├── 4_CorrelacionesNumericas.png
+│   │   │   ├── 5_FrecuenciaTiposAtaque.png
+│   │   │   ├── 6_resultadosAtaques.png
+│   │   │   ├── 7_Top10UbicacionesAfectadas.png
+│   │   │   ├── 8_Top10IndustriasAfectadas.png
+│   │   │   ├── 9_DuracionAtaquePorTipo.png
+│   │   │   ├── 10_SeveridadAtaque.png
+│   │   │   ├── 11_CantidadAtaquesPorMes.png
+│   │   │   ├── 12_MatrizConfusion.png
+│   │   │   └── 13_ComparacionModelos.png
+│   │   └── tables/
+│
+├── old/
+│   ├── README.md
+│   └── README.semana3.md
+│
+└── README.md (modificar)
 
 Implementado en **Python** utilizando librerías de **Scikit-learn**, **Pandas**, **NumPy** y **Matplotlib**.
