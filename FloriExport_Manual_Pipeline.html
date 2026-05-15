@@ -1,0 +1,1247 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Manual del Sistema — FloriExport S.A.</title>
+<style>
+:root{--vd:#1A4731;--vm:#2D6A4F;--vs:#52B788;--vl:#D5E8D4;--vb:#F0FDF4;--gr:#6B7280;--bk:#111827;--wh:#FFFFFF;--bd:#E5E7EB;--rd:#DC2626;--rl:#FEE2E2;--am:#F59E0B;--al:#FEF9C3;--az:#1D4ED8;--ab:#EFF6FF;--sh:0 2px 8px rgba(0,0,0,.08)}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#F9FAFB;color:var(--bk);font-size:15px;line-height:1.7}
+nav{background:var(--vd);position:sticky;top:0;z-index:100;padding:0 1.5rem;display:flex;align-items:center;gap:1.5rem;box-shadow:0 2px 12px rgba(0,0,0,.2)}
+.nav-logo{color:#fff;font-weight:700;font-size:14px;padding:1rem 0;display:flex;align-items:center;gap:8px;white-space:nowrap}
+nav a{color:rgba(255,255,255,.7);text-decoration:none;font-size:12.5px;padding:1rem 0;border-bottom:2px solid transparent;transition:.2s;white-space:nowrap}
+nav a:hover,.nav-a{color:#fff!important;border-bottom-color:var(--vs)!important}
+.hero{background:var(--vd);color:#fff;padding:4rem 2rem 3rem;text-align:center}
+.hero h1{font-size:2rem;font-weight:800;margin-bottom:.5rem}
+.hero .sub{color:rgba(255,255,255,.75);max-width:600px;margin:.5rem auto 1.5rem;font-size:.95rem}
+.hero-tags{display:flex;flex-wrap:wrap;gap:.5rem;justify-content:center;margin-bottom:1.5rem}
+.hero-tag{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);color:#fff;padding:.3rem .85rem;border-radius:20px;font-size:12px}
+.hero-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;max-width:700px;margin:0 auto}
+.hstat{background:rgba(255,255,255,.1);border-radius:10px;padding:1rem;text-align:center}
+.hstat .v{font-size:1.8rem;font-weight:800;line-height:1}
+.hstat .l{font-size:11px;opacity:.75;margin-top:.25rem}
+.hstat.win .v{color:#6EE7B7}
+.wrap{max-width:1080px;margin:0 auto;padding:2.5rem 1.5rem}
+section{margin-bottom:3.5rem;scroll-margin-top:70px}
+.s-title{font-size:1.3rem;font-weight:800;color:var(--vd);display:flex;align-items:center;gap:.75rem;margin-bottom:1.5rem}
+.s-title::before{content:'';display:block;width:5px;height:1.5rem;background:var(--vs);border-radius:3px;flex-shrink:0}
+.intro{font-size:14px;color:var(--gr);margin-bottom:1.5rem;max-width:720px;line-height:1.7}
+.card{background:var(--wh);border:1px solid var(--bd);border-radius:14px;padding:1.25rem 1.5rem;box-shadow:var(--sh)}
+.card-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:1rem}
+.card h3{font-size:.9rem;font-weight:700;color:var(--vd);margin-bottom:.5rem}
+.prob-sol{display:grid;grid-template-columns:1fr 50px 1fr;gap:1rem;align-items:center}
+.prob-box{background:var(--rl);border:1px solid #FECACA;border-radius:14px;padding:1.25rem}
+.prob-box h3{color:var(--rd);margin-bottom:.6rem;font-size:.9rem}
+.sol-box{background:var(--vb);border:1px solid var(--vl);border-radius:14px;padding:1.25rem}
+.sol-box h3{color:var(--vm);margin-bottom:.6rem;font-size:.9rem}
+.arrow-mid{text-align:center;font-size:2rem;color:var(--vs)}
+.metric-row{display:flex;gap:.4rem;flex-wrap:wrap;margin-top:.5rem}
+.mp{font-size:12px;padding:.2rem .6rem;border-radius:6px;font-weight:600}
+.mp-r{background:var(--rl);color:var(--rd)}
+.mp-g{background:var(--vl);color:var(--vm)}
+.flow{display:flex;align-items:stretch;gap:0;margin:1.5rem 0;flex-wrap:wrap}
+.fbox{flex:1;min-width:110px;background:var(--wh);border:1px solid var(--bd);border-radius:10px;padding:.85rem .75rem;text-align:center}
+.fbox .fnum{font-size:1.4rem;margin-bottom:.4rem}
+.fbox .ftit{font-size:12px;font-weight:700;color:var(--vd)}
+.fbox .fsub{font-size:11px;color:var(--gr);margin-top:.2rem}
+.farrow{display:flex;align-items:center;padding:0 .3rem;color:var(--vs);font-size:1.3rem;flex-shrink:0}
+.semana-grid{display:grid;grid-template-columns:1fr 36px 1fr 36px 1fr;gap:.5rem;align-items:center}
+.sem-box{border-radius:12px;padding:1rem;text-align:center}
+.sem-t2{background:#F3F4F6;border:2px dashed #D1D5DB}
+.sem-t1{background:var(--vb);border:2px solid var(--vl)}
+.sem-t{background:var(--al);border:2px solid #FDE68A}
+.sem-box .sw{font-size:1.4rem;font-weight:800;margin-bottom:.2rem}
+.sem-box .sl{font-size:11px;color:var(--gr);margin-bottom:.6rem}
+.sem-box ul{text-align:left;font-size:12px;padding-left:1rem;color:var(--gr)}
+.sem-box ul li{margin-bottom:.25rem}
+.sem-tag{display:inline-block;font-size:10px;padding:2px 7px;border-radius:10px;font-weight:700;margin-bottom:.4rem}
+.st-gr{background:#E5E7EB;color:#374151}
+.st-gn{background:var(--vl);color:var(--vm)}
+.st-ye{background:#FDE68A;color:#92400E}
+.sem-arr{display:flex;align-items:center;justify-content:center;color:var(--vs);font-size:1.3rem}
+.col-comp{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.col-box{border-radius:12px;padding:1.25rem}
+.col-est{background:#F3F4F6;border:1px solid var(--bd)}
+.col-aj{background:var(--vb);border:2px solid var(--vs)}
+.col-box .col-icon{font-size:1.8rem;margin-bottom:.4rem}
+.col-box h4{font-size:.9rem;font-weight:700;margin-bottom:.4rem}
+.col-box p{font-size:13px;color:var(--gr);line-height:1.6}
+.col-lbl{display:inline-block;font-size:11px;padding:2px 8px;border-radius:6px;margin-bottom:.4rem;font-weight:700}
+.cl-gr{background:#E5E7EB;color:#374151}
+.cl-gn{background:var(--vl);color:var(--vm)}
+.feat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(195px,1fr));gap:.75rem}
+.feat-box{background:var(--wh);border:1px solid var(--bd);border-radius:10px;padding:1rem}
+.feat-box .fcat{font-size:11px;font-weight:700;color:var(--vs);text-transform:uppercase;letter-spacing:.05em;margin-bottom:.4rem}
+.feat-box ul{font-size:12px;color:var(--gr);padding-left:1rem}
+.feat-box ul li{margin-bottom:.2rem}
+.feat-hl{border-color:var(--am);background:#FFFBEB}
+.feat-hl .fcat{color:var(--am)}
+.excel-wrap{overflow-x:auto;border-radius:10px;border:1px solid var(--bd);box-shadow:var(--sh)}
+.exc{border-collapse:collapse;min-width:760px;font-size:12px;width:100%}
+.exc th{padding:.5rem .7rem;font-size:11px;font-weight:700;white-space:nowrap;text-align:center}
+.exc td{padding:.45rem .7rem;border-bottom:1px solid #F3F4F6;white-space:nowrap}
+.exc tr:nth-child(even) td{background:#FAFAFA}
+.gh{background:var(--vd);color:#fff}
+.gh2{background:#1D4ED8;color:#fff}
+.gh3{background:#92400E;color:#fff}
+.gh4{background:#276221;color:#fff}
+.sv{background:#C6EFCE;color:#276221;border-radius:4px;padding:1px 6px;font-size:11px;font-weight:700}
+.sa{background:#FFEB9C;color:#9C5700;border-radius:4px;padding:1px 6px;font-size:11px;font-weight:700}
+.sr{background:#FFC7CE;color:#9C0006;border-radius:4px;padding:1px 6px;font-size:11px;font-weight:700}
+.gm{background:#C6EFCE;color:#276221;border-radius:4px;padding:1px 6px;font-size:11px}
+.ge{background:#DBEAFE;color:#1E40AF;border-radius:4px;padding:1px 6px;font-size:11px}
+.ann{background:var(--al);border:1px solid #FDE68A;border-radius:8px;padding:.75rem 1rem;font-size:13px;color:#92400E;margin-top:.75rem;display:flex;align-items:flex-start;gap:.6rem}
+.ann-i{font-size:1.1rem;flex-shrink:0;margin-top:.05rem}
+.res-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1rem}
+.res-card{border-radius:14px;padding:1.25rem}
+.res-mod{background:var(--vb);border:2px solid var(--vs)}
+.res-exp{background:var(--rl);border:1px solid #FECACA}
+.res-card h3{font-size:1rem;font-weight:800;margin-bottom:.85rem}
+.res-row{display:flex;justify-content:space-between;align-items:center;padding:.3rem 0;border-bottom:1px solid rgba(0,0,0,.06)}
+.res-row:last-child{border:none}
+.res-row .rl{font-size:13px;color:var(--gr)}
+.res-row .rv{font-size:14px;font-weight:700}
+.rv-g{color:var(--vm)}
+.rv-r{color:var(--rd)}
+.bwin{display:inline-flex;align-items:center;gap:.35rem;background:var(--vl);color:var(--vm);border-radius:20px;padding:.25rem .85rem;font-size:12px;font-weight:700;margin-top:.75rem}
+.ct{width:100%;border-collapse:collapse;font-size:13px}
+.ct th{background:#F3F4F6;padding:.55rem .8rem;font-weight:700;font-size:12px;color:var(--gr);text-align:left}
+.ct td{padding:.55rem .8rem;border-bottom:1px solid var(--bd)}
+.ct tr.w td{background:var(--vb);font-weight:600}
+.bt{color:var(--vm);font-weight:700}
+.ws{color:var(--rd)}
+.ops{display:flex;flex-direction:column;gap:0}
+.op{display:grid;grid-template-columns:44px 1fr;position:relative}
+.op-line{position:absolute;left:21px;top:44px;width:2px;height:calc(100% - 14px);background:var(--bd)}
+.op-num{display:flex;flex-direction:column;align-items:center;padding-top:4px}
+.op-circle{width:34px;height:34px;border-radius:50%;background:var(--vd);color:#fff;font-weight:800;font-size:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;position:relative;z-index:1}
+.op-body{padding:0 0 1.75rem 1rem}
+.op-body h4{color:var(--vm);font-size:.88rem;font-weight:700;margin-bottom:.3rem}
+.op-body p{font-size:13px;color:var(--gr);line-height:1.6}
+.op-files{margin-top:.4rem;display:flex;flex-wrap:wrap;gap:.3rem}
+.op-file{background:#F3F4F6;color:var(--vm);border-radius:5px;padding:2px 6px;font-size:10px;font-family:monospace}
+.op-tag{display:inline-block;font-size:10px;padding:2px 8px;border-radius:10px;font-weight:700;margin-top:.35rem}
+.ot-w{background:var(--vl);color:var(--vm)}
+.ot-a{background:#FDE68A;color:#92400E}
+.ot-i{background:#DBEAFE;color:#1E40AF}
+.tabs{display:flex;gap:.4rem;border-bottom:2px solid var(--bd);margin-bottom:1.5rem;flex-wrap:wrap}
+.tab{padding:.5rem 1rem;border:none;background:none;cursor:pointer;font-size:13px;color:var(--gr);border-bottom:2px solid transparent;margin-bottom:-2px;border-radius:4px 4px 0 0;transition:.15s}
+.tab:hover{color:var(--vd);background:var(--vb)}
+.tab.on{color:var(--vd);border-bottom-color:var(--vd);font-weight:700;background:var(--vb)}
+.tp{display:none}.tp.on{display:block}
+.faq{border:1px solid var(--bd);border-radius:12px;overflow:hidden}
+.fi{border-bottom:1px solid var(--bd)}.fi:last-child{border:none}
+.fq{width:100%;text-align:left;padding:1rem 1.25rem;background:none;border:none;cursor:pointer;display:flex;justify-content:space-between;align-items:center;font-size:14px;font-weight:600;color:var(--bk);transition:.15s}
+.fq:hover{background:var(--vb)}
+.fq .fa-arr{color:var(--vs);transition:transform .2s;font-size:1.2rem}
+.fq.op .fa-arr{transform:rotate(45deg)}
+.fa{max-height:0;overflow:hidden;transition:all .3s;font-size:13.5px;color:var(--gr);padding:0 1.25rem}
+.fa.op{max-height:400px;padding:.75rem 1.25rem 1.1rem}
+code{background:#F3F4F6;padding:1px 5px;border-radius:4px;font-size:11px;color:var(--vm);font-family:monospace}
+footer{background:var(--vd);color:rgba(255,255,255,.7);text-align:center;padding:1.5rem;font-size:12px;margin-top:2rem}
+footer strong{color:#fff}
+@media(max-width:640px){.prob-sol{grid-template-columns:1fr}.arrow-mid{display:none}.semana-grid{grid-template-columns:1fr}.col-comp{grid-template-columns:1fr}.hero-stats{grid-template-columns:repeat(2,1fr)}nav a{display:none}}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">🌹 FloriExport — Manual del Sistema</div>
+  <a href="#problema">El problema</a>
+  <a href="#solucion">La solución</a>
+  <a href="#logica">Lógica semanal</a>
+  <a href="#columnas">Columna experto</a>
+  <a href="#features">Variables</a>
+  <a href="#pipeline">Pipeline</a>
+  <a href="#excel">Excel</a>
+  <a href="#resultados">Resultados</a>
+  <a href="#faq">FAQ</a>
+</nav>
+
+<div class="hero">
+  <h1>🌹 Sistema Predictivo de Producción de Rosas</h1>
+  <p class="sub">Manual didáctico del pipeline operativo · FloriExport S.A. · FE-A-1A<br>
+  UEES 2026 · Grupo 14 · Enrique Pérez &amp; Fredy Aguirre · Tutora: Mgs. Alexandra Arciniegas Coral</p>
+  <div class="hero-tags">
+    <span class="hero-tag">LightGBM + Optuna</span>
+    <span class="hero-tag">T+1 semana · bloque × variedad</span>
+    <span class="hero-tag">74 series · 20 features agronómicas</span>
+    <span class="hero-tag">Google Colab + Drive</span>
+    <span class="hero-tag">Datos reales Bellarosa / Grupo Elite Ecuador</span>
+  </div>
+  <div class="hero-stats">
+    <div class="hstat win"><div class="v">−25.8%</div><div class="l">Mejora MAPE vs experto</div></div>
+    <div class="hstat win"><div class="v">2.5×</div><div class="l">Más pred. dentro ±10%</div></div>
+    <div class="hstat"><div class="v">577t</div><div class="l">MAE modelo (test)</div></div>
+    <div class="hstat"><div class="v">582t</div><div class="l">MAE experto humano</div></div>
+  </div>
+</div>
+
+<div class="wrap">
+
+<section id="problema">
+  <h2 class="s-title">¿Cuál es el problema que resuelve este sistema?</h2>
+  <p class="intro">En una finca de rosas de exportación, cada semana hay que decidir <strong>cuántas rosas va a producir cada bloque y cada variedad</strong>. Ese número determina contratos, camiones, personal y compromisos con importadores de EE.UU. y Europa. Equivocarse tiene consecuencias económicas directas.</p>
+  <div class="prob-sol">
+    <div class="prob-box">
+      <h3>😰 Antes del sistema</h3>
+      <p style="font-size:13px;color:#7F1D1D;line-height:1.6">Un único experto humano hace la predicción manualmente cada semana, basándose en su experiencia y una estimación anual. Sin trazabilidad, sin registro histórico de aciertos, con alta dependencia de una sola persona. Si falla, el equipo no tiene forma de aprender ni mejorar sistemáticamente.</p>
+      <div class="metric-row">
+        <span class="mp mp-r">MAPE 29.02%</span>
+        <span class="mp mp-r">Solo 26.5% en ±10%</span>
+        <span class="mp mp-r">Sesgo −43t/sem</span>
+        <span class="mp mp-r">Sin trazabilidad</span>
+      </div>
+    </div>
+    <div class="arrow-mid">→</div>
+    <div class="sol-box">
+      <h3>✅ Con el sistema de IA</h3>
+      <p style="font-size:13px;color:#14532D;line-height:1.6">Un modelo LightGBM entrenado con 3 años de datos predice cada semana los tallos de cada bloque × variedad. Se compara automáticamente contra el experto y los reales. El equipo ve semana a semana quién estuvo más cerca y por qué. Totalmente trazable y escalable.</p>
+      <div class="metric-row">
+        <span class="mp mp-g">MAPE 21.52%</span>
+        <span class="mp mp-g">67.5% en ±10%</span>
+        <span class="mp mp-g">Trazable</span>
+        <span class="mp mp-g">Escala a 600+ series</span>
+      </div>
+    </div>
+  </div>
+  <div class="ann" style="margin-top:1.25rem">
+    <span class="ann-i">💡</span>
+    <span><strong>¿Por qué es difícil?</strong> La finca tiene más de 74 combinaciones activas de bloque × variedad. Cada variedad tiene su propio ciclo biológico (entre 85 y 108 días desde el pinche hasta la cosecha), su porcentaje de retorno (cuántas flores sobreviven) y su comportamiento estacional. El experto gestiona esto intuitivamente — el modelo lo hace de forma sistemática para las 74 series simultáneamente.</span>
+  </div>
+</section>
+
+<section id="solucion">
+  <h2 class="s-title">¿Cómo funciona la solución?</h2>
+  <p class="intro">El sistema tiene dos componentes: un <strong>notebook académico</strong> (rosas_v4_final.ipynb) donde se entrenaron y compararon los modelos, y un <strong>pipeline operativo</strong> (rosas_pipeline_v2.ipynb) que corre cada lunes. Este manual explica el pipeline operativo.</p>
+  <div class="flow">
+    <div class="fbox"><div class="fnum">📁</div><div class="ftit">Datos en Drive</div><div class="fsub">Dataset histórico + archivos nuevos</div></div>
+    <div class="farrow">→</div>
+    <div class="fbox"><div class="fnum">⚙️</div><div class="ftit">Feature engineering</div><div class="fsub">20 variables agronómicas automáticas</div></div>
+    <div class="farrow">→</div>
+    <div class="fbox"><div class="fnum">🤖</div><div class="ftit">LightGBM predice</div><div class="fsub">Tallos T+1 por bloque × variedad</div></div>
+    <div class="farrow">→</div>
+    <div class="fbox"><div class="fnum">📊</div><div class="ftit">Comparativa tripartita</div><div class="fsub">Real vs Modelo vs Experto 🟢🟡🔴</div></div>
+    <div class="farrow">→</div>
+    <div class="fbox"><div class="fnum">📧</div><div class="ftit">Excel + correo</div><div class="fsub">Automático a gerencia y ventas</div></div>
+  </div>
+  <div class="card-grid" style="margin-top:1rem">
+    <div class="card"><h3>📂 Carpetas en Drive</h3><ul style="font-size:13px;color:var(--gr);padding-left:1.1rem;margin-top:.4rem"><li style="margin-bottom:.3rem"><code>rosas/dataset/</code> — histórico completo (no modificar)</li><li style="margin-bottom:.3rem"><code>rosas/semanas/YYYY/</code> — archivos nuevos cada lunes</li><li style="margin-bottom:.3rem"><code>rosas/modelos/</code> — modelo entrenado (.pkl)</li><li><code>rosas/reportes/</code> — Excel y PNGs generados</li></ul></div>
+    <div class="card"><h3>🔁 ¿Qué se corre cada semana?</h3><p style="font-size:13px;color:var(--gr);margin-top:.4rem">Solo la <strong style="color:var(--vd)">Sección 5 en adelante</strong>. Las secciones 1-4 (carga histórica, FE y entrenamiento) se corren solo la primera vez o si Colab se reinicia (pierde las variables en memoria). Si aparece "variable no definida", hay que re-correr las secciones 1-4.</p></div>
+    <div class="card"><h3>🔄 Reentrenamiento automático</h3><p style="font-size:13px;color:var(--gr);margin-top:.4rem">Si hay <strong style="color:var(--vd)">3 semanas consecutivas</strong> con semáforo 🔴 ROJO, el pipeline activa el reentrenamiento con ventana rolling de 78 semanas. El nuevo modelo reemplaza al activo solo si mejora. Si empeora → rollback automático al anterior.</p></div>
+  </div>
+</section>
+
+<section id="logica">
+  <h2 class="s-title">¿Qué datos usa cada semana y para qué?</h2>
+  <p class="intro">Este es el punto más importante. Cada lunes el pipeline trabaja con <strong>tres semanas simultáneamente</strong>. Entender esto es clave para saber qué archivos subir y qué esperar del sistema.</p>
+  <div class="semana-grid" style="margin-bottom:1.5rem">
+    <div class="sem-box sem-t2">
+      <span class="sem-tag st-gr">Semana T−2 (ej: S18)</span>
+      <div class="sw" style="color:var(--gr)">S18</div>
+      <div class="sl">Hace 2 semanas</div>
+      <ul><li>Ya cosechada</li><li>El modelo predijo S19 en ese momento</li><li>Ese reporte está en Drive</li></ul>
+    </div>
+    <div class="sem-arr">→</div>
+    <div class="sem-box sem-t1">
+      <span class="sem-tag st-gn">Semana T−1 (ej: S19) ← EVALUACIÓN</span>
+      <div class="sw" style="color:var(--vm)">S19</div>
+      <div class="sl">Semana anterior, ya cerrada</div>
+      <ul><li>Datos operativos reales disponibles</li><li>Producción, plantas, plagas, labores</li><li>Se compara: Real vs Modelo vs Experto</li></ul>
+    </div>
+    <div class="sem-arr">→</div>
+    <div class="sem-box sem-t">
+      <span class="sem-tag st-ye">Semana T (ej: S20) ← HOY</span>
+      <div class="sw" style="color:#92400E">S20</div>
+      <div class="sl">Semana actual (lunes)</div>
+      <ul><li>El experto ya ajustó su predicción</li><li>Columna "ajuste" disponible</li><li>El modelo predice S21 (T+1)</li></ul>
+    </div>
+  </div>
+  <div class="ann">
+    <span class="ann-i">🎯</span>
+    <span><strong>Ejemplo concreto (hoy es lunes semana 20):</strong> El pipeline lee los datos operativos de <strong>semana 19</strong> (producción real, plantas, plagas — ya cerrada) y el ajuste del experto de <strong>semana 20</strong> (ya disponible). Con eso, predice <strong>semana 21</strong>. Al mismo tiempo, lee lo que el modelo predijo hace 2 semanas para S19 y lo compara con los reales de S19 y el ajuste del experto para S19 → esa es la <strong>evaluación tripartita</strong>.</span>
+  </div>
+  <div class="card" style="margin-top:1.25rem">
+    <h3>📂 Archivos que necesitas cada lunes en <code>semanas/YYYY/</code></h3>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-top:.75rem">
+      <div>
+        <p style="font-size:12px;font-weight:700;color:var(--vm);margin-bottom:.4rem">De la semana T−1 (datos operativos ya cerrados):</p>
+        <div style="display:flex;flex-direction:column;gap:.3rem">
+          <span class="op-file">YYYY_(T-1)_produccion.xlsx</span>
+          <span class="op-file">YYYY_(T-1)_kardex.xlsx</span>
+          <span class="op-file">YYYY_(T-1)_mipe.xlsx</span>
+          <span class="op-file">YYYY_(T-1)_pinches.xlsx</span>
+          <span style="font-size:11px;color:var(--gr);margin-top:.2rem">⚡ Clima: si no existe, ERA5 lo descarga automáticamente (Open-Meteo)</span>
+        </div>
+      </div>
+      <div>
+        <p style="font-size:12px;font-weight:700;color:#92400E;margin-bottom:.4rem">De la semana T (ajuste del experto ya disponible):</p>
+        <div style="display:flex;flex-direction:column;gap:.3rem">
+          <span class="op-file">YYYY_T_predicciones_estadistica.xlsx</span>
+          <span style="font-size:11px;color:var(--gr);margin-top:.2rem">⚠️ Columna que se usa: <code>ajuste</code> (no <code>Estimado</code> — ver siguiente sección)</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="columnas">
+  <h2 class="s-title">La columna del experto: ¿"Estimado" o "ajuste"?</h2>
+  <p class="intro">El archivo <code>predicciones_estadistica.xlsx</code> tiene <strong>dos columnas de predicción del experto</strong>. Esta distinción es crítica para entender la comparación justa:</p>
+  <div class="col-comp">
+    <div class="col-box col-est">
+      <span class="col-lbl cl-gr">❌ NO se usa para comparar</span>
+      <div class="col-icon">📅</div>
+      <h4 style="color:var(--gr)">Columna: <code>Estimado</code></h4>
+      <p>Predicción que el experto hace <strong>al inicio del año</strong>, antes de que empiece la temporada. Es una estimación anual basada en la estructura histórica de la finca. <strong>No tiene información de lo que pasa semana a semana.</strong> Solo sirve como referencia histórica informativa, no como benchmark competitivo contra el modelo.</p>
+    </div>
+    <div class="col-box col-aj">
+      <span class="col-lbl cl-gn">✅ ESTA compite con el modelo</span>
+      <div class="col-icon">🎯</div>
+      <h4 style="color:var(--vm)">Columna: <code>ajuste</code></h4>
+      <p>Predicción que el experto actualiza <strong>cada semana</strong> para la semana siguiente (T+1). La hace usando la misma información disponible que el modelo. <strong>La comparación es justa</strong> porque ambos predicen T+1 con la misma información de la semana T. El ajuste puede ser positivo (el experto sube la estimación) o negativo (la baja).</p>
+    </div>
+  </div>
+  <div class="ann" style="margin-top:1rem">
+    <span class="ann-i">🧠</span>
+    <span><strong>Analogía:</strong> "Estimado" es como decir "este año voy a vender 1,000 unidades" en enero. "Ajuste" es decir "esta semana específica voy a vender 47 unidades" — con información actualizada. El modelo compite contra el ajuste, no contra la predicción anual.</span>
+  </div>
+</section>
+
+<section id="features">
+  <h2 class="s-title">¿Con qué variables predice el modelo?</h2>
+  <p class="intro">El modelo usa <strong>20 variables predictoras</strong> calculadas automáticamente integrando las 9 fuentes de datos. El pipeline las recalcula cada semana con los datos nuevos.</p>
+  <div class="feat-grid">
+    <div class="feat-box feat-hl">
+      <div class="fcat">⭐ Rezagos temporales (más importantes)</div>
+      <ul>
+        <li><strong>lag_1</strong> — tallos semana anterior (80% importancia)</li>
+        <li><strong>tallos_esp_ciclo</strong> — tallos(T−ciclo/7) × retorno</li>
+        <li><strong>lag_4</strong> — tallos hace 4 semanas</li>
+        <li><strong>lag_52</strong> — mismo período año anterior</li>
+      </ul>
+    </div>
+    <div class="feat-box">
+      <div class="fcat">🌱 Estructura productiva (Kardex)</div>
+      <ul>
+        <li><strong>plantas_prod</strong> — plantas productivas</li>
+        <li><strong>area_prod</strong> — área en m²</li>
+        <li><strong>tallos_por_planta</strong> — rendimiento</li>
+      </ul>
+    </div>
+    <div class="feat-box">
+      <div class="fcat">🐛 Fitosanitarias (MIPE)</div>
+      <ul>
+        <li><strong>mipe_max</strong> — máx. incidencia plagas</li>
+        <li><strong>mipe_mean</strong> — promedio incidencia</li>
+      </ul>
+    </div>
+    <div class="feat-box">
+      <div class="fcat">✂️ Operativas (Pinches)</div>
+      <ul>
+        <li><strong>plantas_pinchadas</strong> — labores de cultivo</li>
+        <li><strong>is_temporada</strong> — San Valentín / Madres / Navidad</li>
+        <li><strong>ciclo</strong> — días pinche→cosecha</li>
+        <li><strong>porcentaje_retorno</strong> — % flores que sobreviven</li>
+      </ul>
+    </div>
+    <div class="feat-box">
+      <div class="fcat">🌡 Climáticas (ERA5)</div>
+      <ul>
+        <li><strong>temp_min / temp_max / temp_media</strong></li>
+        <li><strong>vpd_max / vpd_media</strong> — déficit presión vapor</li>
+      </ul>
+    </div>
+    <div class="feat-box">
+      <div class="fcat">🔢 Encodings</div>
+      <ul>
+        <li><strong>bloque_enc</strong> — LabelEncoder bloque</li>
+        <li><strong>variedad_enc</strong> — LabelEncoder variedad</li>
+      </ul>
+    </div>
+  </div>
+  <div class="ann" style="margin-top:1rem">
+    <span class="ann-i">🔬</span>
+    <span><strong>¿Por qué lag_1 domina con 80%?</strong> lag_1 (correlación 0.87 con target) y tallos_esp_ciclo (correlación 0.78) tienen entre sí correlación 0.76 — son similares (multicolinealidad). LightGBM elige lag_1 por ser más directo. Esto es un <strong>hallazgo documentado</strong> en ML tabular (Ke et al., 2017) — no es un error de diseño. tallos_esp_ciclo igual aporta información del ciclo biológico específico de cada variedad.</span>
+  </div>
+</section>
+
+<section id="pipeline">
+  <h2 class="s-title">Pasos del pipeline — qué hace cada celda</h2>
+  <div class="tabs">
+    <button class="tab on" onclick="showT(''t-p'',this)">🔧 Primera vez (secciones 1-4)</button>
+    <button class="tab" onclick="showT(''t-s'',this)">📅 Cada lunes (sección 5 en adelante)</button>
+  </div>
+  <div id="t-p" class="tp on">
+    <div class="ops">
+      <div class="op"><div class="op-num"><div class="op-circle">1</div><div class="op-line"></div></div><div class="op-body"><h4>Instalación y configuración</h4><p>Instala librerías (lightgbm, openpyxl, scikit-learn, matplotlib, optuna), monta Google Drive y define constantes: rutas, umbrales de semáforo (±5%, ±10%, ±15%) y la lista de 20 features.</p><span class="op-tag ot-i">Solo primera vez o si Colab se reinicia</span></div></div>
+      <div class="op"><div class="op-num"><div class="op-circle">2</div><div class="op-line"></div></div><div class="op-body"><h4>Carga del dataset histórico</h4><p>Lee los 9 archivos Excel de <code>rosas/dataset/</code>. Cada archivo tiene una hoja con el mismo nombre del archivo (importante: los Excel tienen varias hojas de documentación). Normaliza tipos, fechas y texto. Si falta clima histórico, descarga ERA5.</p><div class="op-files"><span class="op-file">produccion.xlsx → hoja 'produccion'</span><span class="op-file">predicciones_estadistica.xlsx → columna 'ajuste'</span><span class="op-file">maestro_variedad.xlsx → ciclo y % retorno</span></div><span class="op-tag ot-i">Solo primera vez</span></div></div>
+      <div class="op"><div class="op-num"><div class="op-circle">3</div><div class="op-line"></div></div><div class="op-body"><h4>Feature engineering histórico</h4><p>Construye el dataset de modelado con 20 variables para cada bloque × variedad × semana ISO. Calcula lags, tallos_esp_ciclo, integra kardex, MIPE, pinches y clima. Resultado: ~10,340 registros × 20 features.</p><span class="op-tag ot-i">Solo primera vez</span></div></div>
+      <div class="op"><div class="op-num"><div class="op-circle">4</div></div><div class="op-body"><h4>Entrenamiento inicial</h4><p>Split temporal por fecha ISO (70%/15%/15%). Calcula baseline del experto (columna "ajuste", mismo test set). Entrena LightGBM con Optuna (80 trials, TPE, semilla 42). Guarda modelo activo.</p><div class="op-files"><span class="op-file">modelos/modelo_activo.pkl</span><span class="op-file">modelos/modelo_activo_encoders.pkl</span><span class="op-file">modelos/modelo_activo_metadata.json</span></div><span class="op-tag ot-i">Solo primera vez</span></div></div>
+    </div>
+  </div>
+  <div id="t-s" class="tp">
+    <div class="ops">
+      <div class="op"><div class="op-num"><div class="op-circle">5.1</div><div class="op-line"></div></div><div class="op-body"><h4>Cargar modelo activo</h4><p>Deserializa <code>modelo_activo.pkl</code> y sus encoders. Muestra la fecha de entrenamiento y métricas del test para confirmar que el modelo está listo.</p><span class="op-tag ot-w">Cada lunes</span></div></div>
+      <div class="op"><div class="op-num"><div class="op-circle">5.2</div><div class="op-line"></div></div><div class="op-body"><h4>Leer archivos semanales</h4><p>Lee operativos de <strong>semana T−1</strong> (producción, kardex, MIPE, pinches) y ajuste experto de <strong>semana T</strong>. Detecta la semana automáticamente por calendario ISO. Sin clima → ERA5.</p><div class="op-files"><span class="op-file">semanas/YYYY/YYYY_(T-1)_produccion.xlsx</span><span class="op-file">semanas/YYYY/YYYY_T_predicciones_estadistica.xlsx</span></div><span class="op-tag ot-w">Cada lunes</span></div></div>
+      <div class="op"><div class="op-num"><div class="op-circle">5.3</div><div class="op-line"></div></div><div class="op-body"><h4>Feature engineering semanal</h4><p>Concatena histórico + datos nuevos y recalcula todos los lags para las series activas de la semana T−1. Dataset listo para inferencia.</p><span class="op-tag ot-w">Cada lunes</span></div></div>
+      <div class="op"><div class="op-num"><div class="op-circle">5.4</div><div class="op-line"></div></div><div class="op-body"><h4>Predicción T+1</h4><p>LightGBM predice los tallos de semana T+1 para cada bloque × variedad. Tiempo: ~0.2ms/serie. Asigna semáforo por serie: 🟢 error ≤10% / 🟡 ≤15% / 🔴 &gt;15%.</p><span class="op-tag ot-w">Cada lunes — resultado principal</span></div></div>
+      <div class="op"><div class="op-num"><div class="op-circle">5.5</div><div class="op-line"></div></div><div class="op-body"><h4>Evaluación tripartita T−1</h4><p>Lee <code>reportes/YYYY_(T-1)_reporte.xlsx</code> hoja "prediccion" para recuperar lo que el modelo predijo para T−1. Compara: <strong>Real cosechado</strong> vs <strong>Modelo</strong> vs <strong>Experto (ajuste)</strong>. Determina ganador por serie y globalmente.</p><div class="op-files"><span class="op-file">Fuente: reportes/YYYY_(T-1)_reporte.xlsx → hoja "prediccion"</span></div><span class="op-tag ot-w">Cada lunes</span></div></div>
+      <div class="op"><div class="op-num"><div class="op-circle">6</div><div class="op-line"></div></div><div class="op-body"><h4>Generar Excel de salida</h4><p>Crea <code>reportes/YYYY_SS_reporte.xlsx</code> con 5 hojas: prediccion · evaluacion · comparativa_completa · semaforos · historial. La hoja "prediccion" es la que leerá el siguiente pipeline.</p><span class="op-tag ot-a">Automático</span></div></div>
+      <div class="op"><div class="op-num"><div class="op-circle">7-10</div></div><div class="op-body"><h4>Gráficos · Correo · Reentrenamiento · Rollback</h4><p>Genera PNGs → adjunta al correo automático → verifica si procede reentrenamiento (3 semanas en 🔴) → si el nuevo modelo empeoró, hace rollback al anterior.</p><span class="op-tag ot-a">Automático</span></div></div>
+    </div>
+  </div>
+</section>
+
+<section id="excel">
+  <h2 class="s-title">El Excel de salida — cómo leer cada hoja</h2>
+  <p class="intro">El archivo <code>YYYY_SS_reporte.xlsx</code> tiene 5 hojas. La más importante es <strong>comparativa_completa</strong>: muestra todos los números en una sola vista con colores por semáforo.</p>
+  <div class="tabs">
+    <button class="tab on" onclick="showE(''e-c'',this)">comparativa_completa ★</button>
+    <button class="tab" onclick="showE(''e-p'',this)">prediccion</button>
+    <button class="tab" onclick="showE(''e-e'',this)">evaluacion</button>
+    <button class="tab" onclick="showE(''e-s'',this)">semaforos</button>
+    <button class="tab" onclick="showE(''e-h'',this)">historial</button>
+  </div>
+  <div id="e-c" class="tp on">
+    <p style="font-size:13.5px;color:var(--gr);margin-bottom:.85rem">Vista integrada para el equipo de producción y la tutora. Muestra <strong>todos los números por bloque × variedad</strong> en una sola hoja con colores de semáforo y el ganador de cada serie.</p>
+    <div class="excel-wrap">
+      <table class="exc">
+        <thead>
+          <tr><th class="gh" colspan="2">Identificación</th><th style="background:#4B5563;color:#fff">Estimado anual</th><th class="gh2" colspan="2">Experto — ajuste T+1</th><th class="gh3" colspan="2">Predicción modelo</th><th class="gh4" colspan="2">Resultado</th></tr>
+          <tr><th style="background:#F3F4F6;color:var(--gr)">Bloque</th><th style="background:#F3F4F6;color:var(--gr)">Variedad</th><th style="background:#F3F4F6;color:var(--gr)">Estimado</th><th style="background:#DBEAFE;color:#1E3A5F">Ajuste</th><th style="background:#DBEAFE;color:#1E3A5F">Err%</th><th style="background:#FFF7ED;color:#7C2D12">Modelo</th><th style="background:#FFF7ED;color:#7C2D12">Err%</th><th style="background:#F0FDF4;color:#14532D">Semáforo</th><th style="background:#F0FDF4;color:#14532D">Ganador</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>C8</td><td>TOFFEE</td><td>3,850</td><td>4,000</td><td>7.5%</td><td><strong>4,210</strong></td><td><strong>2.4%</strong></td><td><span class="sv">🟢 VERDE</span></td><td><span class="gm">✅ Modelo</span></td></tr>
+          <tr><td>C8</td><td>LUMIA</td><td>2,975</td><td>3,500</td><td>15.7%</td><td><strong>3,180</strong></td><td><strong>5.1%</strong></td><td><span class="sv">🟢 VERDE</span></td><td><span class="gm">✅ Modelo</span></td></tr>
+          <tr><td>C8</td><td>MAMMA MIA</td><td>9,500</td><td>6,000</td><td>18.1%</td><td><strong>7,890</strong></td><td><strong>7.7%</strong></td><td><span class="sv">🟢 VERDE</span></td><td><span class="gm">✅ Modelo</span></td></tr>
+          <tr><td>C7</td><td>EXPLORER</td><td>900</td><td><strong>1,400</strong></td><td><strong>8.2%</strong></td><td>1,290</td><td>15.4%</td><td><span class="sa">🟡 AMARILLO</span></td><td><span class="ge">👤 Experto</span></td></tr>
+          <tr><td>A5</td><td>FRUTTETO</td><td>10,500</td><td>9,800</td><td>12.4%</td><td><strong>11,497</strong></td><td><strong>4.6%</strong></td><td><span class="sv">🟢 VERDE</span></td><td><span class="gm">✅ Modelo</span></td></tr>
+          <tr><td>B3</td><td>FREEDOM</td><td>5,200</td><td>4,100</td><td>28.9%</td><td>5,890</td><td>21.3%</td><td><span class="sr">🔴 ROJO</span></td><td><span class="gm">✅ Modelo</span></td></tr>
+          <tr style="font-weight:700;background:#FEFCE8"><td colspan="2">TOTAL / PROMEDIO</td><td>—</td><td>254,000</td><td>19.8%</td><td>264,176</td><td>10.2%</td><td>—</td><td>—</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="ann" style="margin-top:.85rem">
+      <span class="ann-i">📌</span>
+      <span><strong>Cómo leer:</strong> <strong style="color:#4B5563">Estimado</strong> = predicción anual (referencia, no compite). <strong style="color:var(--az)">Ajuste</strong> = predicción semanal T+1 del experto (compite con el modelo). <strong style="color:#92400E">Modelo</strong> = LightGBM. El Err% se calcula contra el real cosechado. El semáforo y ganador se basan en quién tuvo menor error absoluto por serie.</span>
+    </div>
+  </div>
+  <div id="e-p" class="tp">
+    <p style="font-size:13.5px;color:var(--gr);margin-bottom:.85rem">Predicción del modelo para semana T+1. <strong>Hoja crítica:</strong> el pipeline siguiente la leerá para recuperar la predicción y compararla con los reales.</p>
+    <div class="excel-wrap"><table class="exc"><thead><tr><th class="gh">Bloque</th><th class="gh">Variedad</th><th class="gh">Año pred.</th><th class="gh">Semana pred.</th><th class="gh">Tallos predichos (modelo)</th></tr></thead><tbody><tr><td>A1</td><td>CANDLELIGHT</td><td>2026</td><td>21</td><td>3,114</td></tr><tr><td>C8</td><td>TOFFEE</td><td>2026</td><td>21</td><td>4,210</td></tr><tr><td>A5</td><td>FRUTTETO</td><td>2026</td><td>21</td><td>11,497</td></tr><tr style="font-weight:700"><td colspan="4" style="text-align:right">TOTAL semana 21</td><td>264,176</td></tr></tbody></table></div>
+    <div class="ann" style="margin-top:.85rem"><span class="ann-i">🔗</span><span>Esta hoja se guarda en <code>reportes/YYYY_SS_reporte.xlsx</code>. El siguiente lunes, el pipeline busca: "si hoy es semana 20, leo <code>2026_19_reporte.xlsx</code> hoja 'prediccion'" para la evaluación tripartita de la semana 19.</span></div>
+  </div>
+  <div id="e-e" class="tp">
+    <p style="font-size:13.5px;color:var(--gr);margin-bottom:.85rem">Comparativa tripartita de semana T−1 con todos los errores por serie.</p>
+    <div class="excel-wrap"><table class="exc"><thead><tr><th class="gh">Bloque</th><th class="gh">Variedad</th><th class="gh">Real S19</th><th class="gh">Modelo</th><th class="gh">Err abs</th><th class="gh">Err%</th><th class="gh">Semáforo</th><th class="gh2">Experto</th><th class="gh2">Err%</th><th class="gh">Ganador</th></tr></thead><tbody><tr><td>C8</td><td>TOFFEE</td><td>4,325</td><td>4,210</td><td>115</td><td>2.7%</td><td><span class="sv">🟢</span></td><td>4,000</td><td>7.5%</td><td><span class="gm">✅</span></td></tr><tr><td>C8</td><td>MAMMA MIA</td><td>7,325</td><td>7,890</td><td>565</td><td>7.7%</td><td><span class="sv">🟢</span></td><td>6,000</td><td>18.1%</td><td><span class="gm">✅</span></td></tr><tr><td>C7</td><td>EXPLORER</td><td>1,525</td><td>1,290</td><td>235</td><td>15.4%</td><td><span class="sa">🟡</span></td><td>1,400</td><td>8.2%</td><td><span class="ge">👤</span></td></tr></tbody></table></div>
+  </div>
+  <div id="e-s" class="tp">
+    <div class="res-grid">
+      <div class="res-card res-mod"><h3 style="color:var(--vm)">🤖 Modelo LightGBM — S19</h3><div class="res-row"><span class="rl">MAE (tallos)</span><span class="rv rv-g">900t</span></div><div class="res-row"><span class="rl">MAPE%</span><span class="rv rv-g">17.81%</span></div><div class="res-row"><span class="rl">%±10%</span><span class="rv rv-g">40.4%</span></div><div class="res-row"><span class="rl">R²</span><span class="rv rv-g">0.87</span></div><span class="bwin">✅ GANADOR semana 19</span></div>
+      <div class="res-card res-exp"><h3 style="color:var(--rd)">👤 Experto Humano — S19</h3><div class="res-row"><span class="rl">MAE (tallos)</span><span class="rv rv-r">2,494t</span></div><div class="res-row"><span class="rl">MAPE%</span><span class="rv rv-r">41.16%</span></div><div class="res-row"><span class="rl">%±10%</span><span class="rv rv-r">19.1%</span></div><div class="res-row"><span class="rl">R²</span><span class="rv rv-r">0.61</span></div><p style="font-size:12px;color:var(--gr);margin-top:.6rem">Semana 19 fue especialmente difícil para el experto (MAPE 41% vs su promedio histórico de 29%).</p></div>
+    </div>
+  </div>
+  <div id="e-h" class="tp">
+    <p style="font-size:13.5px;color:var(--gr);margin-bottom:.85rem">Registro acumulado de desempeño semana a semana. Permite ver tendencias y detectar drift. Si hay 3 filas con 🔴 ROJO consecutivas → reentrenamiento automático.</p>
+    <div class="excel-wrap"><table class="exc"><thead><tr><th class="gh">Semana pred.</th><th class="gh">Semana eval.</th><th class="gh">MAE Modelo</th><th class="gh">MAPE Modelo</th><th class="gh">MAE Experto</th><th class="gh">MAPE Experto</th><th class="gh">Ganador</th></tr></thead><tbody><tr><td>S17</td><td>S18</td><td>850t</td><td>19.2%</td><td>1,820t</td><td>35.4%</td><td><span class="gm">✅ Modelo</span></td></tr><tr><td>S18</td><td>S19</td><td>900t</td><td>17.8%</td><td>2,494t</td><td>41.2%</td><td><span class="gm">✅ Modelo</span></td></tr><tr><td>S19</td><td>S20</td><td>—</td><td>—</td><td>—</td><td>—</td><td>pendiente</td></tr></tbody></table></div>
+  </div>
+</section>
+
+<section id="resultados">
+  <h2 class="s-title">Resultados — el modelo vs. el experto humano</h2>
+  <p class="intro">Comparativa sobre el mismo período de test (2025-12-08 → 2026-05-11). Función de evaluación idéntica para todos los modelos.</p>
+  <div class="card" style="padding:0;overflow:hidden;margin-bottom:1.25rem">
+    <table class="ct">
+      <thead><tr><th>Modelo</th><th>MAE ★</th><th>MAPE%</th><th>%±10%</th><th>R²</th><th>vs Experto</th></tr></thead>
+      <tbody>
+        <tr><td>EXP0 — Experto Humano (columna ajuste, mismo test)</td><td>581.6t</td><td>29.02%</td><td>26.5%</td><td>0.8384</td><td>— baseline —</td></tr>
+        <tr><td>EXP1 — Estadísticos sin features agronómicas</td><td class="ws">2,984.8t</td><td class="ws">86.79%</td><td class="ws">5.8%</td><td class="ws">−0.81</td><td class="ws">❌ 5× peor</td></tr>
+        <tr><td>EXP2 — XGBoost</td><td class="ws">947.8t</td><td class="ws">46.49%</td><td>66.6%</td><td>0.6881</td><td class="ws">❌ MAE peor</td></tr>
+        <tr><td>EXP2 — LightGBM base</td><td>597.0t</td><td class="bt">25.01%</td><td class="bt">69.1%</td><td class="bt">0.8617</td><td class="bt">✅ MAPE+%±10%</td></tr>
+        <tr class="w"><td>EXP2 — Random Forest ★</td><td class="bt">558.9t</td><td class="bt">23.56%</td><td class="bt">67.7%</td><td class="bt">0.8622</td><td class="bt">✅ TODO (+3.9%)</td></tr>
+        <tr class="w"><td>EXP2 — LightGBM + Optuna ★ (producción)</td><td class="bt">577.2t</td><td class="bt">21.52%</td><td class="bt">67.5%</td><td class="bt">0.8593</td><td class="bt">✅ MAPE −25.8%</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="card-grid">
+    <div class="card" style="border-left:4px solid var(--rd)"><h3>💡 EXP1 confirma el valor del feature engineering</h3><p style="font-size:13px;color:var(--gr)">Sin las 20 features agronómicas, los modelos estadísticos están 5× peor que el experto. Demuestra que el conocimiento del dominio florícola (ciclo biológico, plagas, labores, estacionalidad) es esencial e irremplazable.</p></div>
+    <div class="card" style="border-left:4px solid var(--vs)"><h3>🎯 %±10%: el hallazgo más impactante</h3><p style="font-size:13px;color:var(--gr)">El modelo predice dentro del umbral operativo 67.5% de las veces vs 26.5% del experto. <strong>2.5× más predicciones dentro del rango</strong> que importa para logística y ventas.</p></div>
+    <div class="card" style="border-left:4px solid var(--am)"><h3>🏭 Modelo elegido para producción</h3><p style="font-size:13px;color:var(--gr)">LightGBM + Optuna: CPU nativa (sin GPU), interpretable (importancia de variables visible), escalable a 600+ series, reentrenamiento automático mensual con rollback.</p></div>
+  </div>
+</section>
+
+<section id="faq">
+  <h2 class="s-title">Preguntas frecuentes</h2>
+  <div class="faq">
+    <div class="fi"><button class="fq" onclick="tFaq(this)">¿Por qué "ajuste" y no "Estimado"? <span class="fa-arr">+</span></button><div class="fa">"Estimado" es la predicción al inicio del año — no tiene información de la semana actual. "Ajuste" es la que el experto actualiza cada semana. La comparación es justa porque ambos predicen T+1 con la misma información disponible en la semana T.</div></div>
+    <div class="fi"><button class="fq" onclick="tFaq(this)">¿Qué pasa si no hay archivo de clima semanal? <span class="fa-arr">+</span></button><div class="fa">El pipeline descarga automáticamente datos ERA5 de Open-Meteo (lat=0.0429°, lon=−78.2344°, región Cayambe/Tabacundo). No hay que hacer nada manual. Si la API falla, usa la mediana histórica por semana ISO.</div></div>
+    <div class="fi"><button class="fq" onclick="tFaq(this)">¿Por qué lag_1 tiene 80% de importancia? ¿No es demasiado? <span class="fa-arr">+</span></button><div class="fa">No es un error. lag_1 (corr. 0.87) y tallos_esp_ciclo (corr. 0.78) tienen entre sí correlación 0.76 (multicolinealidad). LightGBM elige lag_1 por ser más directo. tallos_esp_ciclo aporta información del ciclo biológico de cada variedad. Hallazgo documentado en Ke et al. (2017).</div></div>
+    <div class="fi"><button class="fq" onclick="tFaq(this)">¿Dónde queda guardada la predicción para usarla la semana siguiente? <span class="fa-arr">+</span></button><div class="fa">En <code>rosas/reportes/YYYY_SS_reporte.xlsx</code>, hoja "prediccion". El siguiente lunes, el pipeline busca ese archivo para recuperar la predicción y compararla con los reales (evaluación tripartita).</div></div>
+    <div class="fi"><button class="fq" onclick="tFaq(this)">¿Cuándo se activa el reentrenamiento? ¿Es peligroso? <span class="fa-arr">+</span></button><div class="fa">Con 3 semanas consecutivas en 🔴 ROJO. Usa ventana rolling de 78 semanas. El nuevo modelo solo reemplaza al activo si su MAE mejora. Si empeora → rollback automático. No es peligroso: hay protección de rollback y el historial queda registrado.</div></div>
+    <div class="fi"><button class="fq" onclick="tFaq(this)">¿Las secciones 1-4 hay que correrlas cada semana? <span class="fa-arr">+</span></button><div class="fa">No. Solo la primera vez o si Colab se reinicia (pierde las variables en memoria). Cada lunes solo se corre la sección 5 en adelante. Si aparece "variable no definida", hay que re-correr las secciones 1-4.</div></div>
+    <div class="fi"><button class="fq" onclick="tFaq(this)">¿Qué son FloriExport S.A. y FE-A-1A? <span class="fa-arr">+</span></button><div class="fa">Nombres ficticios para proteger la confidencialidad. La empresa real es Bellarosa / Grupo Elite Ecuador, la finca real es BR-1A (Cayambe/Tabacundo, ~2.850 msnm). Todos los datos y resultados son 100% reales — solo los nombres están anonimizados para el entorno académico.</div></div>
+    <div class="fi"><button class="fq" onclick="tFaq(this)">¿Por qué 🔴 ROJO no siempre significa que el modelo falló? <span class="fa-arr">+</span></button><div class="fa">El 🔴 indica error &gt;15% en esa serie. Puede ser que esa serie tuvo variación inusual (brote de plagas, fallo de sensor) que ningún modelo habría predicho bien. Es una señal para revisión humana, no necesariamente una falla del sistema.</div></div>
+  </div>
+</section>
+
+</div>
+
+<footer>
+  <strong>Sistema Predictivo de Producción de Rosas — FloriExport S.A. (ficticio)</strong><br>
+  UEES Maestría en Inteligencia Artificial 2026 · Grupo 14 · Enrique Pérez &amp; Fredy Aguirre · Tutora: Mgs. Alexandra Arciniegas Coral
+</footer>
+
+<script>
+function showT(id,btn){document.querySelectorAll("#pipeline .tp").forEach(t=>t.classList.remove("on"));document.querySelectorAll("#pipeline .tab").forEach(t=>t.classList.remove("on"));document.getElementById(id).classList.add("on");btn.classList.add("on")}
+function showE(id,btn){document.querySelectorAll("#excel .tp").forEach(t=>t.classList.remove("on"));document.querySelectorAll("#excel .tab").forEach(t=>t.classList.remove("on"));document.getElementById(id).classList.add("on");btn.classList.add("on")}
+function tFaq(btn){const a=btn.nextElementSibling;const o=a.classList.contains("op");document.querySelectorAll(".fa").forEach(x=>x.classList.remove("op"));document.querySelectorAll(".fq").forEach(x=>x.classList.remove("op"));if(!o){a.classList.add("op");btn.classList.add("op")}}
+const secs=document.querySelectorAll("section[id]");const links=document.querySelectorAll("nav a");
+window.addEventListener("scroll",()=>{let c="";secs.forEach(s=>{if(window.scrollY>=s.offsetTop-80)c=s.id});links.forEach(a=>a.classList.toggle("nav-a",a.getAttribute("href")==="#"+c))});
+</script>
+</body>
+</html>'''
+<style>
+:root {
+  --verde: #1A4731; --verde2: #2D6A4F; --verde3: #52B788;
+  --verde-claro: #D5E8D4; --verde-bg: #F0FDF4;
+  --gris: #6B7280; --negro: #111827; --blanco: #FFFFFF;
+  --borde: #E5E7EB; --rojo: #DC2626; --amar: #F59E0B;
+  --azul: #1D4ED8; --azul-claro: #EFF6FF;
+  --sombra: 0 1px 3px rgba(0,0,0,0.08);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background: #F9FAFB; color: var(--negro); font-size: 15px; line-height: 1.6; }
+
+/* NAV */
+nav { position: sticky; top: 0; background: var(--verde); z-index: 100;
+  padding: 0 2rem; display: flex; align-items: center; gap: 2rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15); }
+nav .logo { color: #fff; font-size: 15px; font-weight: 600;
+  padding: 1rem 0; white-space: nowrap; display: flex; align-items: center; gap: 8px; }
+nav .logo span { font-size: 20px; }
+nav a { color: rgba(255,255,255,0.75); text-decoration: none; font-size: 13px;
+  padding: 1rem 0; border-bottom: 2px solid transparent; transition: all .2s;
+  white-space: nowrap; }
+nav a:hover, nav a.active { color: #fff; border-bottom-color: var(--verde3); }
+
+/* HERO */
+.hero { background: linear-gradient(135deg, var(--verde) 0%, var(--verde2) 100%);
+  color: #fff; padding: 4rem 2rem; text-align: center; }
+.hero h1 { font-size: 2rem; font-weight: 700; margin-bottom: .5rem; }
+.hero p { color: rgba(255,255,255,0.8); font-size: 1rem; max-width: 600px; margin: 0 auto 1.5rem; }
+.hero-badges { display: flex; gap: .75rem; justify-content: center; flex-wrap: wrap; }
+.badge { background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.3);
+  color: #fff; padding: .35rem .85rem; border-radius: 20px; font-size: 12px; }
+
+/* LAYOUT */
+.container { max-width: 1100px; margin: 0 auto; padding: 2rem; }
+section { margin-bottom: 3rem; scroll-margin-top: 70px; }
+h2.section-title { font-size: 1.4rem; font-weight: 700; color: var(--verde);
+  border-left: 4px solid var(--verde3); padding-left: 1rem;
+  margin-bottom: 1.5rem; }
+h3 { font-size: 1rem; font-weight: 600; color: var(--negro); margin-bottom: .75rem; }
+
+/* CARDS */
+.card { background: var(--blanco); border: 1px solid var(--borde);
+  border-radius: 12px; padding: 1.25rem 1.5rem; box-shadow: var(--sombra); }
+.card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1rem; }
+
+/* KPI CARDS */
+.kpi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px,1fr));
+  gap: 1rem; margin-bottom: 2rem; }
+.kpi { background: var(--blanco); border: 1px solid var(--borde); border-radius: 10px;
+  padding: 1rem; text-align: center; box-shadow: var(--sombra); }
+.kpi .val { font-size: 1.8rem; font-weight: 700; line-height: 1; margin: .35rem 0 .25rem; }
+.kpi .lbl { font-size: 11px; color: var(--gris); text-transform: uppercase;
+  letter-spacing: .05em; }
+.kpi .sub { font-size: 11px; margin-top: .25rem; }
+.kpi.verde .val { color: var(--verde); }
+.kpi.azul  .val { color: var(--azul); }
+.kpi.rojo  .val { color: var(--rojo); }
+.kpi.amar  .val { color: var(--amar); }
+
+/* STEPS */
+.steps { display: flex; flex-direction: column; gap: 0; }
+.step { display: grid; grid-template-columns: 56px 1fr; gap: 0; position: relative; }
+.step:not(:last-child) .step-line { position: absolute; left: 27px; top: 56px;
+  width: 2px; height: calc(100% - 12px); background: var(--borde); }
+.step-num { display: flex; flex-direction: column; align-items: center; padding-top: 4px; }
+.step-circle { width: 40px; height: 40px; border-radius: 50%; background: var(--verde);
+  color: #fff; font-weight: 700; font-size: 15px;
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+  position: relative; z-index: 1; }
+.step-body { padding: 0 0 2rem 1rem; }
+.step-body h3 { color: var(--verde2); font-size: .95rem; margin-bottom: .4rem; }
+.step-body p { font-size: 13.5px; color: var(--gris); line-height: 1.55; }
+.step-tag { display: inline-block; font-size: 11px; padding: 2px 8px;
+  border-radius: 4px; margin-top: .5rem; font-weight: 500; }
+.tag-init { background: #EFF6FF; color: var(--azul); }
+.tag-weekly { background: var(--verde-claro); color: var(--verde); }
+.tag-auto { background: #FEF9C3; color: #92400E; }
+
+/* FILES TABLE */
+.file-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+.file-table th { background: var(--verde); color: #fff; padding: .6rem .85rem;
+  text-align: left; font-weight: 600; font-size: 12px; }
+.file-table td { padding: .6rem .85rem; border-bottom: 1px solid var(--borde);
+  vertical-align: top; }
+.file-table tr:last-child td { border-bottom: none; }
+.file-table tr:nth-child(even) td { background: #FAFAFA; }
+.file-table code { background: #F3F4F6; padding: 1px 5px; border-radius: 4px;
+  font-size: 11px; color: var(--verde2); font-family: monospace; }
+.pill { display: inline-block; font-size: 10px; padding: 2px 7px; border-radius: 10px;
+  font-weight: 600; }
+.pill-in  { background: var(--azul-claro); color: var(--azul); }
+.pill-out { background: var(--verde-bg); color: var(--verde); }
+.pill-cfg { background: #FEF9C3; color: #92400E; }
+
+/* EXCEL PREVIEW */
+.excel-wrap { overflow-x: auto; border: 1px solid var(--borde); border-radius: 8px; }
+.excel-table { border-collapse: collapse; min-width: 700px; font-size: 12px; }
+.excel-table th { background: var(--verde); color: #fff; padding: .5rem .7rem;
+  font-weight: 600; white-space: nowrap; }
+.excel-table td { padding: .45rem .7rem; border-bottom: 1px solid #E5E7EB;
+  white-space: nowrap; }
+.excel-table tr:nth-child(even) td { background: #F9FAFB; }
+.sem-verde  { background: #C6EFCE; color: #276221; border-radius: 4px;
+  padding: 1px 6px; font-size: 11px; font-weight: 600; }
+.sem-amar   { background: #FFEB9C; color: #9C5700; border-radius: 4px;
+  padding: 1px 6px; font-size: 11px; font-weight: 600; }
+.sem-rojo   { background: #FFC7CE; color: #9C0006; border-radius: 4px;
+  padding: 1px 6px; font-size: 11px; font-weight: 600; }
+.win-mod    { background: #C6EFCE; color: #276221; border-radius: 4px;
+  padding: 1px 6px; font-size: 11px; }
+.win-exp    { background: #DDEBF7; color: #1F4E79; border-radius: 4px;
+  padding: 1px 6px; font-size: 11px; }
+.col-group  { background: #E2EFDA; }
+.col-group2 { background: #DDEBF7; }
+.col-group3 { background: #FFF2CC; }
+.col-group4 { background: #E2EFDA; }
+
+/* TABS */
+.tabs { display: flex; gap: .5rem; border-bottom: 2px solid var(--borde);
+  margin-bottom: 1.5rem; flex-wrap: wrap; }
+.tab { padding: .55rem 1.1rem; border: none; background: none; cursor: pointer;
+  font-size: 13.5px; color: var(--gris); border-bottom: 2px solid transparent;
+  margin-bottom: -2px; border-radius: 4px 4px 0 0; transition: all .2s; }
+.tab:hover { color: var(--verde); background: var(--verde-bg); }
+.tab.active { color: var(--verde); border-bottom-color: var(--verde);
+  font-weight: 600; background: var(--verde-bg); }
+.tab-content { display: none; }
+.tab-content.active { display: block; }
+
+/* FAQ */
+.faq { border: 1px solid var(--borde); border-radius: 10px; overflow: hidden; }
+.faq-item { border-bottom: 1px solid var(--borde); }
+.faq-item:last-child { border-bottom: none; }
+.faq-q { width: 100%; text-align: left; padding: 1rem 1.25rem;
+  background: none; border: none; cursor: pointer; display: flex;
+  justify-content: space-between; align-items: center;
+  font-size: 14px; font-weight: 500; color: var(--negro);
+  transition: background .15s; }
+.faq-q:hover { background: var(--verde-bg); }
+.faq-q .arr { color: var(--verde); transition: transform .2s; font-size: 18px; }
+.faq-q.open .arr { transform: rotate(45deg); }
+.faq-a { padding: 0 1.25rem; max-height: 0; overflow: hidden;
+  transition: all .3s; font-size: 13.5px; color: var(--gris); }
+.faq-a.open { padding: .75rem 1.25rem 1rem; max-height: 300px; }
+
+/* LOGIC FLOW */
+.logic-flow { display: flex; align-items: stretch; gap: 0; flex-wrap: wrap; }
+.logic-box { flex: 1; min-width: 120px; background: var(--blanco);
+  border: 1px solid var(--borde); border-radius: 8px; padding: .85rem;
+  text-align: center; position: relative; }
+.logic-box .icon { font-size: 24px; margin-bottom: .4rem; }
+.logic-box .title { font-size: 12px; font-weight: 600; color: var(--verde2); }
+.logic-box .sub { font-size: 11px; color: var(--gris); margin-top: .25rem; }
+.logic-arrow { display: flex; align-items: center; padding: 0 .25rem; color: var(--verde3); font-size: 20px; }
+
+/* RESULTS TABLE */
+.res-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+.res-table th { background: #F3F4F6; padding: .6rem .85rem; font-weight: 600;
+  font-size: 12px; color: var(--gris); text-align: left; }
+.res-table td { padding: .6rem .85rem; border-bottom: 1px solid var(--borde); }
+.res-table tr.winner td { background: var(--verde-bg); font-weight: 600; }
+.better { color: var(--verde); font-weight: 600; }
+.worse  { color: var(--rojo); }
+
+/* FOOTER */
+footer { background: var(--verde); color: rgba(255,255,255,0.7);
+  text-align: center; padding: 1.5rem; font-size: 12px; margin-top: 3rem; }
+footer strong { color: #fff; }
+
+@media (max-width: 600px) {
+  nav a { display: none; }
+  .hero h1 { font-size: 1.4rem; }
+  .kpi-grid { grid-template-columns: repeat(2, 1fr); }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo"><span>🌹</span> FloriExport — Pipeline IA</div>
+  <a href="#resumen" class="active">Resumen</a>
+  <a href="#arquitectura">Arquitectura</a>
+  <a href="#pasos">Pasos</a>
+  <a href="#archivos">Archivos</a>
+  <a href="#excel">Excel</a>
+  <a href="#resultados">Resultados</a>
+  <a href="#faq">FAQ</a>
+</nav>
+
+<div class="hero">
+  <h1>🌹 Sistema Predictivo de Producción de Rosas</h1>
+  <p>Manual del pipeline operativo semanal — FloriExport S.A. · FE-A-1A · UEES 2026 · Grupo 14</p>
+  <div class="hero-badges">
+    <span class="badge">LightGBM + Optuna</span>
+    <span class="badge">T+1 semana · bloque × variedad</span>
+    <span class="badge">74 series activas</span>
+    <span class="badge">Google Colab + Drive</span>
+    <span class="badge">Enrique Pérez & Fredy Aguirre</span>
+  </div>
+</div>
+
+<div class="container">
+
+<!-- ══ RESUMEN ══ -->
+<section id="resumen">
+  <h2 class="section-title">Resumen ejecutivo</h2>
+  <div class="kpi-grid">
+    <div class="kpi verde">
+      <div class="lbl">MAE Modelo (test)</div>
+      <div class="val">577t</div>
+      <div class="sub" style="color:var(--verde)">LightGBM + Optuna ★</div>
+    </div>
+    <div class="kpi rojo">
+      <div class="lbl">MAE Experto Humano</div>
+      <div class="val">582t</div>
+      <div class="sub" style="color:var(--rojo)">Baseline ajuste T+1</div>
+    </div>
+    <div class="kpi verde">
+      <div class="lbl">MAPE Modelo</div>
+      <div class="val">21.5%</div>
+      <div class="sub" style="color:var(--verde)">−25.8% vs experto</div>
+    </div>
+    <div class="kpi amar">
+      <div class="lbl">%±10% Modelo</div>
+      <div class="val">67.5%</div>
+      <div class="sub" style="color:var(--amar)">vs 26.5% del experto</div>
+    </div>
+    <div class="kpi azul">
+      <div class="lbl">Series predichas/sem</div>
+      <div class="val">74</div>
+      <div class="sub" style="color:var(--azul)">bloque × variedad</div>
+    </div>
+    <div class="kpi verde">
+      <div class="lbl">Ganador S19</div>
+      <div class="val">✅</div>
+      <div class="sub" style="color:var(--verde)">Modelo (MAE 900 vs 2494)</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>¿Qué hace este sistema?</h3>
+    <p style="color:var(--gris);font-size:14px;margin-top:.5rem">
+      Cada lunes, el pipeline lee los datos operativos de la semana anterior (producción, plantas, plagas, labores)
+      y predice cuántos tallos producirá cada bloque × variedad la semana siguiente.
+      Simultáneamente, evalúa qué tan bien predijo la semana pasada — comparando la predicción del modelo
+      contra el ajuste del experto humano y los tallos realmente cosechados.
+      El resultado: un Excel con semáforos (🟢🟡🔴) y un correo automático al equipo.
+    </p>
+  </div>
+</section>
+
+<!-- ══ ARQUITECTURA ══ -->
+<section id="arquitectura">
+  <h2 class="section-title">Arquitectura del sistema</h2>
+  <div class="logic-flow" style="margin-bottom:1.5rem">
+    <div class="logic-box">
+      <div class="icon">📁</div>
+      <div class="title">Google Drive</div>
+      <div class="sub">Dataset histórico + archivos semanales</div>
+    </div>
+    <div class="logic-arrow">→</div>
+    <div class="logic-box">
+      <div class="icon">⚙️</div>
+      <div class="title">Colab notebook</div>
+      <div class="sub">rosas_pipeline_v2.ipynb</div>
+    </div>
+    <div class="logic-arrow">→</div>
+    <div class="logic-box">
+      <div class="icon">🤖</div>
+      <div class="title">LightGBM + Optuna</div>
+      <div class="sub">20 features agronómicas</div>
+    </div>
+    <div class="logic-arrow">→</div>
+    <div class="logic-box">
+      <div class="icon">📊</div>
+      <div class="title">Excel + PNGs</div>
+      <div class="sub">5 hojas · semáforos</div>
+    </div>
+    <div class="logic-arrow">→</div>
+    <div class="logic-box">
+      <div class="icon">📧</div>
+      <div class="title">Correo automático</div>
+      <div class="sub">Gerencia · cultivo · ventas</div>
+    </div>
+  </div>
+
+  <div class="card-grid">
+    <div class="card">
+      <h3>📂 Carpetas en Drive</h3>
+      <ul style="font-size:13px;color:var(--gris);padding-left:1.2rem;margin-top:.5rem">
+        <li style="margin-bottom:.4rem"><code style="background:#F3F4F6;padding:1px 5px;border-radius:4px;font-size:11px">rosas/dataset/</code> — dataset histórico (intocable)</li>
+        <li style="margin-bottom:.4rem"><code style="background:#F3F4F6;padding:1px 5px;border-radius:4px;font-size:11px">rosas/semanas/YYYY/</code> — datos semanales nuevos</li>
+        <li style="margin-bottom:.4rem"><code style="background:#F3F4F6;padding:1px 5px;border-radius:4px;font-size:11px">rosas/modelos/</code> — modelo activo (.pkl)</li>
+        <li><code style="background:#F3F4F6;padding:1px 5px;border-radius:4px;font-size:11px">rosas/reportes/</code> — salidas semanales (Excel + PNG)</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>⏱ Lógica temporal</h3>
+      <p style="font-size:13px;color:var(--gris);margin-top:.5rem">
+        <strong style="color:var(--negro)">Semana T</strong> (lunes actual):<br>
+        → Lee operativos de T−1 (ya cerrada)<br>
+        → Lee ajuste experto de T (ya disponible)<br>
+        → Predice T+1 con el modelo<br>
+        → Evalúa T−1: Real vs Modelo vs Experto
+      </p>
+    </div>
+    <div class="card">
+      <h3>🔄 Columna del experto</h3>
+      <p style="font-size:13px;color:var(--gris);margin-top:.5rem">
+        <strong style="color:var(--rojo)">Estimado</strong>: predicción al inicio del año — solo referencia histórica.<br><br>
+        <strong style="color:var(--verde)">Ajuste</strong>: predicción T+1 ajustada semana a semana ← <strong>esta compite con el modelo</strong>. Comparación justa: ambos predicen T+1 con la misma información disponible.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ══ PASOS ══ -->
+<section id="pasos">
+  <h2 class="section-title">Pasos del pipeline</h2>
+
+  <div class="tabs">
+    <button class="tab active" onclick="showTab('primera')">Primera vez</button>
+    <button class="tab" onclick="showTab('semanal')">Cada lunes</button>
+  </div>
+
+  <div id="primera" class="tab-content active">
+    <div class="steps">
+      <div class="step">
+        <div class="step-num"><div class="step-circle">1</div><div class="step-line"></div></div>
+        <div class="step-body">
+          <h3>Instalación y configuración</h3>
+          <p>Instala librerías (lightgbm, openpyxl, scikit-learn, etc.), importa módulos, monta Google Drive y define constantes del proyecto (rutas, umbrales, features).</p>
+          <span class="step-tag tag-init">Solo primera vez</span>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num"><div class="step-circle">2</div><div class="step-line"></div></div>
+        <div class="step-body">
+          <h3>Carga de datos históricos</h3>
+          <p>Lee los 9 archivos Excel de <code style="background:#F3F4F6;padding:1px 4px;border-radius:3px;font-size:11px">dataset/</code> (cada uno con hoja del mismo nombre). Normaliza tipos y fechas. Si falta clima, descarga ERA5 de Open-Meteo automáticamente (lat 0.04°, lon −78.23°).</p>
+          <span class="step-tag tag-init">Solo primera vez o cuando cambia el histórico</span>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num"><div class="step-circle">3</div><div class="step-line"></div></div>
+        <div class="step-body">
+          <h3>Feature engineering</h3>
+          <p>Construye 20 variables predictoras: rezagos temporales (lag_1, lag_4, lag_52), tallos_esp_ciclo = tallos(T−ciclo/7) × retorno, plantas productivas, presión fitosanitaria, is_temporada, clima y encodings.</p>
+          <span class="step-tag tag-init">Solo primera vez</span>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num"><div class="step-circle">4</div><div class="step-line"></div></div>
+        <div class="step-body">
+          <h3>Entrenamiento inicial</h3>
+          <p>Split temporal por fecha ISO (70/15/15). Calcula baseline del experto. Entrena LightGBM con Optuna (80 trials, TPE, semilla 42). Guarda modelo en <code style="background:#F3F4F6;padding:1px 4px;border-radius:3px;font-size:11px">modelos/modelo_activo.pkl</code>.</p>
+          <span class="step-tag tag-init">Solo primera vez</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="semanal" class="tab-content">
+    <div class="steps">
+      <div class="step">
+        <div class="step-num"><div class="step-circle">5.1</div><div class="step-line"></div></div>
+        <div class="step-body">
+          <h3>Cargar modelo activo</h3>
+          <p>Lee <code style="background:#F3F4F6;padding:1px 4px;border-radius:3px;font-size:11px">modelo_activo.pkl</code> desde Drive. Muestra fecha de entrenamiento y métricas del test.</p>
+          <span class="step-tag tag-weekly">Cada lunes</span>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num"><div class="step-circle">5.2</div><div class="step-line"></div></div>
+        <div class="step-body">
+          <h3>Leer archivos semanales</h3>
+          <p><strong>Operativos de semana T−1</strong> (produccion, kardex, mipe, pinches) + <strong>predicciones experto de semana T</strong> (columna ajuste). Si no hay clima semanal → ERA5 automático.</p>
+          <span class="step-tag tag-weekly">Cada lunes</span>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num"><div class="step-circle">5.3</div><div class="step-line"></div></div>
+        <div class="step-body">
+          <h3>Feature engineering semanal</h3>
+          <p>Concatena histórico + datos nuevos y recalcula todos los lags para las series de la semana T−1.</p>
+          <span class="step-tag tag-weekly">Cada lunes</span>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num"><div class="step-circle">5.4</div><div class="step-line"></div></div>
+        <div class="step-body">
+          <h3>Predicción T+1</h3>
+          <p>LightGBM predice tallos para la semana T+1 en cada bloque × variedad. Tiempo: ~0.2 ms/serie. Genera semáforo por serie (🟢≤10% · 🟡≤15% · 🔴&gt;15%).</p>
+          <span class="step-tag tag-weekly">Cada lunes</span>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num"><div class="step-circle">5.5</div><div class="step-line"></div></div>
+        <div class="step-body">
+          <h3>Evaluación tripartita T−1</h3>
+          <p>Lee reporte anterior para recuperar la predicción del modelo para T−1. Compara: <strong>Real cosechado</strong> vs <strong>Modelo (predicho en T−2)</strong> vs <strong>Experto (ajuste T−1)</strong>. Determina ganador por serie y global.</p>
+          <span class="step-tag tag-weekly">Cada lunes</span>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num"><div class="step-circle">6</div><div class="step-line"></div></div>
+        <div class="step-body">
+          <h3>Excel de salida</h3>
+          <p>Genera <code style="background:#F3F4F6;padding:1px 4px;border-radius:3px;font-size:11px">YYYY_SS_reporte.xlsx</code> con 5 hojas en <code style="background:#F3F4F6;padding:1px 4px;border-radius:3px;font-size:11px">reportes/</code>: prediccion · evaluacion · comparativa_completa · semaforos · historial.</p>
+          <span class="step-tag tag-auto">Automático</span>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num"><div class="step-circle">7</div><div class="step-line"></div></div>
+        <div class="step-body">
+          <h3>Gráficos PNG</h3>
+          <p>Genera scatter predicho vs real y semáforos por bloque. Se adjuntan al correo automáticamente.</p>
+          <span class="step-tag tag-auto">Automático</span>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num"><div class="step-circle">8</div><div class="step-line"></div></div>
+        <div class="step-body">
+          <h3>Correo automático</h3>
+          <p>Envía Excel + PNGs a la lista de destinatarios configurada. Requiere credenciales Gmail con "contraseñas de aplicación".</p>
+          <span class="step-tag tag-auto">Automático (requiere credenciales)</span>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num"><div class="step-circle">9</div><div class="step-line"></div></div>
+        <div class="step-body">
+          <h3>Reentrenamiento condicional</h3>
+          <p>Si hay 3 semanas consecutivas en 🔴 ROJO, activa reentrenamiento con ventana rolling de 78 semanas. El nuevo modelo reemplaza al activo solo si mejora. Si empeora → rollback automático (sección 10).</p>
+          <span class="step-tag tag-auto">Automático</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ ARCHIVOS ══ -->
+<section id="archivos">
+  <h2 class="section-title">Archivos de entrada y salida</h2>
+  <div class="card" style="padding:0;overflow:hidden">
+    <table class="file-table">
+      <thead>
+        <tr>
+          <th>Archivo</th>
+          <th>Carpeta en Drive</th>
+          <th>Hoja</th>
+          <th>Rol</th>
+          <th>Tipo</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td><code>produccion.xlsx</code></td><td><code>dataset/</code></td><td><code>produccion</code></td><td>Variable objetivo y rezagos</td><td><span class="pill pill-in">Entrada</span></td></tr>
+        <tr><td><code>kardex.xlsx</code></td><td><code>dataset/</code></td><td><code>kardex</code></td><td>Plantas productivas y área</td><td><span class="pill pill-in">Entrada</span></td></tr>
+        <tr><td><code>clima_estaciones.xlsx</code></td><td><code>dataset/</code></td><td><code>clima_estaciones</code></td><td>Temperatura, humedad, VPD</td><td><span class="pill pill-in">Entrada</span></td></tr>
+        <tr><td><code>mipe.xlsx</code></td><td><code>dataset/</code></td><td><code>mipe</code></td><td>Presión fitosanitaria</td><td><span class="pill pill-in">Entrada</span></td></tr>
+        <tr><td><code>pinches.xlsx</code></td><td><code>dataset/</code></td><td><code>pinches</code></td><td>Labores de cultivo · is_temporada</td><td><span class="pill pill-in">Entrada</span></td></tr>
+        <tr><td><code>predicciones_estadistica.xlsx</code></td><td><code>dataset/</code></td><td><code>predicciones_estadistica</code></td><td>Estimado anual + Ajuste T+1 + Real</td><td><span class="pill pill-in">Entrada</span></td></tr>
+        <tr><td><code>maestro_variedad.xlsx</code></td><td><code>dataset/</code></td><td><code>maestro_variedad</code></td><td>Ciclo 92.2d · retorno 79.97%</td><td><span class="pill pill-in">Entrada</span></td></tr>
+        <tr><td><code>YYYY_SS_produccion.xlsx</code></td><td><code>semanas/YYYY/</code></td><td>automático</td><td>Producción real semana T−1</td><td><span class="pill pill-in">Entrada</span></td></tr>
+        <tr><td><code>YYYY_SS_predicciones_estadistica.xlsx</code></td><td><code>semanas/YYYY/</code></td><td>automático</td><td>Ajuste experto semana T</td><td><span class="pill pill-in">Entrada</span></td></tr>
+        <tr><td><code>modelo_activo.pkl</code></td><td><code>modelos/</code></td><td>—</td><td>Modelo LightGBM serializado</td><td><span class="pill pill-cfg">Modelo</span></td></tr>
+        <tr><td><code>YYYY_SS_reporte.xlsx</code></td><td><code>reportes/</code></td><td>5 hojas</td><td>Excel de salida con semáforos</td><td><span class="pill pill-out">Salida</span></td></tr>
+        <tr><td><code>YYYY_SS_comparativa.png</code></td><td><code>reportes/</code></td><td>—</td><td>Gráfico scatter + error%</td><td><span class="pill pill-out">Salida</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ══ EXCEL ══ -->
+<section id="excel">
+  <h2 class="section-title">Cómo leer el Excel de salida</h2>
+  <p style="color:var(--gris);font-size:14px;margin-bottom:1rem">
+    El archivo <code style="background:#F3F4F6;padding:2px 6px;border-radius:4px">YYYY_SS_reporte.xlsx</code> tiene 5 hojas.
+    La más importante para el equipo es <strong>comparativa_completa</strong>.
+  </p>
+
+  <div class="tabs">
+    <button class="tab active" onclick="showExcel('comp')">comparativa_completa ★</button>
+    <button class="tab" onclick="showExcel('pred')">prediccion</button>
+    <button class="tab" onclick="showExcel('eval')">evaluacion</button>
+    <button class="tab" onclick="showExcel('sem')">semaforos</button>
+  </div>
+
+  <div id="comp" class="tab-content active">
+    <p style="font-size:13px;color:var(--gris);margin-bottom:1rem">
+      Vista integrada para el equipo de producción y la tutora. Muestra todos los números por bloque × variedad en una sola hoja con colores por semáforo.
+    </p>
+    <div class="excel-wrap">
+      <table class="excel-table">
+        <thead>
+          <tr>
+            <th style="background:#2D6A4F">Bloque</th>
+            <th style="background:#2D6A4F">Variedad</th>
+            <th class="col-group" style="color:#276221">Estimado anual</th>
+            <th class="col-group2" style="color:#1F4E79">Ajuste experto</th>
+            <th class="col-group2" style="color:#1F4E79">Err% experto</th>
+            <th class="col-group3" style="color:#7D5A00">Pred. modelo</th>
+            <th class="col-group3" style="color:#7D5A00">Err% modelo</th>
+            <th class="col-group4" style="color:#276221">Semáforo</th>
+            <th class="col-group4" style="color:#276221">Ganador</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>C8</td><td>TOFFEE</td><td>3,850</td><td>4,000</td><td>7.5%</td><td>4,210</td><td>2.4%</td><td><span class="sem-verde">🟢 VERDE</span></td><td><span class="win-mod">✅ Modelo</span></td></tr>
+          <tr><td>C8</td><td>LUMIA</td><td>2,975</td><td>3,500</td><td>15.7%</td><td>3,180</td><td>5.1%</td><td><span class="sem-verde">🟢 VERDE</span></td><td><span class="win-mod">✅ Modelo</span></td></tr>
+          <tr><td>C8</td><td>MAMMA MIA</td><td>9,500</td><td>6,000</td><td>18.1%</td><td>7,890</td><td>7.7%</td><td><span class="sem-verde">🟢 VERDE</span></td><td><span class="win-mod">✅ Modelo</span></td></tr>
+          <tr><td>C7</td><td>EXPLORER</td><td>900</td><td>1,400</td><td>8.2%</td><td>1,290</td><td>15.4%</td><td><span class="sem-amar">🟡 AMARILLO</span></td><td><span class="win-exp">👤 Experto</span></td></tr>
+          <tr><td>A1</td><td>CANDLELIGHT</td><td>2,500</td><td>2,800</td><td>35.2%</td><td>3,114</td><td>3.8%</td><td><span class="sem-verde">🟢 VERDE</span></td><td><span class="win-mod">✅ Modelo</span></td></tr>
+          <tr><td>A5</td><td>FRUTTETO</td><td>10,500</td><td>9,800</td><td>12.4%</td><td>11,497</td><td>4.6%</td><td><span class="sem-verde">🟢 VERDE</span></td><td><span class="win-mod">✅ Modelo</span></td></tr>
+          <tr><td>B3</td><td>FREEDOM</td><td>5,200</td><td>4,100</td><td>28.9%</td><td>5,890</td><td>21.3%</td><td><span class="sem-rojo">🔴 ROJO</span></td><td><span class="win-mod">✅ Modelo</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div style="margin-top:1rem;font-size:12px;color:var(--gris)">
+      <strong>Columnas clave:</strong>
+      <span style="background:#E2EFDA;padding:1px 6px;border-radius:3px;margin:0 4px;font-size:11px">Estimado</span> predicción anual inicial del experto (referencia) ·
+      <span style="background:#DDEBF7;padding:1px 6px;border-radius:3px;margin:0 4px;font-size:11px">Ajuste experto</span> predicción T+1 semanal (compite con el modelo) ·
+      <span style="background:#FFF2CC;padding:1px 6px;border-radius:3px;margin:0 4px;font-size:11px">Pred. modelo</span> LightGBM + Optuna
+    </div>
+  </div>
+
+  <div id="pred" class="tab-content">
+    <p style="font-size:13px;color:var(--gris);margin-bottom:1rem">
+      Predicción del modelo para la semana T+1. Esta hoja es la que leerá el pipeline de la siguiente semana para la evaluación tripartita.
+    </p>
+    <div class="excel-wrap">
+      <table class="excel-table">
+        <thead>
+          <tr><th>Bloque</th><th>Variedad</th><th>Año pred.</th><th>Semana pred.</th><th>Tallos predichos (modelo)</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>A1</td><td>CANDLELIGHT</td><td>2026</td><td>21</td><td>3,114</td></tr>
+          <tr><td>A5</td><td>FRUTTETO</td><td>2026</td><td>21</td><td>11,497</td></tr>
+          <tr><td>C8</td><td>TOFFEE</td><td>2026</td><td>21</td><td>4,210</td></tr>
+          <tr><td>C7</td><td>EXPLORER</td><td>2026</td><td>21</td><td>1,290</td></tr>
+          <tr><td colspan="4" style="font-weight:700;text-align:right">TOTAL</td><td style="font-weight:700">264,176</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div id="eval" class="tab-content">
+    <p style="font-size:13px;color:var(--gris);margin-bottom:1rem">
+      Comparativa tripartita de la semana T−1 con métricas detalladas por serie.
+    </p>
+    <div class="excel-wrap">
+      <table class="excel-table">
+        <thead>
+          <tr><th>Bloque</th><th>Variedad</th><th>Real S19</th><th>Modelo</th><th>Err abs mod.</th><th>Err% mod.</th><th>Semáforo mod.</th><th>Experto</th><th>Err% exp.</th><th>Ganador</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>C8</td><td>TOFFEE</td><td>4,325</td><td>4,210</td><td>115</td><td>2.7%</td><td><span class="sem-verde">🟢</span></td><td>4,000</td><td>7.5%</td><td><span class="win-mod">✅</span></td></tr>
+          <tr><td>C8</td><td>MAMMA MIA</td><td>7,325</td><td>7,890</td><td>565</td><td>7.7%</td><td><span class="sem-verde">🟢</span></td><td>6,000</td><td>18.1%</td><td><span class="win-mod">✅</span></td></tr>
+          <tr><td>C7</td><td>EXPLORER</td><td>1,525</td><td>1,290</td><td>235</td><td>15.4%</td><td><span class="sem-amar">🟡</span></td><td>1,400</td><td>8.2%</td><td><span class="win-exp">👤</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div id="sem" class="tab-content">
+    <p style="font-size:13px;color:var(--gris);margin-bottom:1rem">
+      Métricas globales para la semana evaluada — modelo vs experto.
+    </p>
+    <div class="card-grid">
+      <div class="card" style="border-left:4px solid var(--verde)">
+        <h3 style="color:var(--verde)">🤖 Modelo LightGBM</h3>
+        <table style="width:100%;font-size:13px;margin-top:.5rem">
+          <tr><td style="color:var(--gris)">MAE</td><td style="font-weight:600;text-align:right">900t</td></tr>
+          <tr><td style="color:var(--gris)">MAPE</td><td style="font-weight:600;text-align:right;color:var(--verde)">17.81%</td></tr>
+          <tr><td style="color:var(--gris)">%±10%</td><td style="font-weight:600;text-align:right;color:var(--verde)">40.4%</td></tr>
+          <tr><td style="color:var(--gris)">Ganador</td><td style="font-weight:600;text-align:right;color:var(--verde)">✅ MODELO</td></tr>
+        </table>
+      </div>
+      <div class="card" style="border-left:4px solid var(--rojo)">
+        <h3 style="color:var(--rojo)">👤 Experto Humano</h3>
+        <table style="width:100%;font-size:13px;margin-top:.5rem">
+          <tr><td style="color:var(--gris)">MAE</td><td style="font-weight:600;text-align:right">2,494t</td></tr>
+          <tr><td style="color:var(--gris)">MAPE</td><td style="font-weight:600;text-align:right;color:var(--rojo)">41.16%</td></tr>
+          <tr><td style="color:var(--gris)">%±10%</td><td style="font-weight:600;text-align:right;color:var(--rojo)">19.1%</td></tr>
+          <tr><td style="color:var(--gris)">Ganador</td><td style="font-weight:600;text-align:right;color:var(--rojo)">❌</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ RESULTADOS ══ -->
+<section id="resultados">
+  <h2 class="section-title">Resultados vs. Experto Humano</h2>
+  <p style="font-size:14px;color:var(--gris);margin-bottom:1rem">
+    Comparativa sobre el mismo período de test (2025-12-08 → 2026-05-11). Función de evaluación idéntica para todos los modelos.
+  </p>
+  <div class="card" style="padding:0;overflow:hidden">
+    <table class="res-table">
+      <thead>
+        <tr>
+          <th>Modelo</th><th>MAE ★</th><th>MAPE%</th><th>%±10%</th><th>R²</th><th>vs Experto</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>EXP0 — Experto Humano (ajuste T+1)</td><td>581.6t</td><td>29.02%</td><td>26.5%</td><td>0.8384</td><td>—baseline—</td></tr>
+        <tr><td>EXP1 — Estadísticos (sin features agronómicas)</td><td>2,984.8t</td><td>86.79%</td><td>5.8%</td><td>−0.81</td><td class="worse">❌ 5× peor</td></tr>
+        <tr><td>EXP2 — XGBoost</td><td>947.8t</td><td>46.49%</td><td>66.6%</td><td>0.6881</td><td class="worse">❌ MAE peor</td></tr>
+        <tr><td>EXP2 — LightGBM base</td><td>597.0t</td><td>25.01%</td><td>69.1%</td><td>0.8617</td><td class="better">✅ MAPE+%±10%</td></tr>
+        <tr class="winner"><td>EXP2 — Random Forest ★</td><td class="better">558.9t</td><td class="better">23.56%</td><td class="better">67.7%</td><td class="better">0.8622</td><td class="better">✅ TODO (+3.9% MAE)</td></tr>
+        <tr class="winner"><td>EXP2 — LightGBM + Optuna ★</td><td class="better">577.2t</td><td class="better">21.52%</td><td class="better">67.5%</td><td class="better">0.8593</td><td class="better">✅ MAE+MAPE (−25.8%)</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p style="font-size:12px;color:var(--gris);margin-top:.75rem">
+    ★ MAE en tallos = métrica principal operativa. Las filas resaltadas en verde superan al experto en todos los indicadores.
+    El %±10% pasa de 26.5% a 67.5% — el modelo predice dentro del umbral operativo <strong>2.5× más</strong> que el experto.
+  </p>
+</section>
+
+<!-- ══ FAQ ══ -->
+<section id="faq">
+  <h2 class="section-title">Preguntas frecuentes</h2>
+  <div class="faq">
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        ¿Por qué se usa la columna "ajuste" y no "Estimado"?
+        <span class="arr">+</span>
+      </button>
+      <div class="faq-a">
+        <strong>Estimado</strong> es la predicción que el experto hace al inicio del año — no tiene información de la semana actual. <strong>Ajuste</strong> es la predicción T+1 que el experto actualiza cada semana con la información disponible. La comparación justa es contra "ajuste" porque ambos — el modelo y el experto — predicen T+1 usando la misma información de la semana T.
+      </div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        ¿Qué pasa si no hay archivo de clima para la semana?
+        <span class="arr">+</span>
+      </button>
+      <div class="faq-a">
+        El pipeline descarga automáticamente datos ERA5 de la API Open-Meteo para las coordenadas de la finca (lat=0.0429°, lon=−78.2344°). No es necesario hacer nada manualmente. Si la API también falla, usa la mediana histórica por semana ISO.
+      </div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        ¿Cuándo se activa el reentrenamiento automático?
+        <span class="arr">+</span>
+      </button>
+      <div class="faq-a">
+        Cuando hay 3 semanas consecutivas con semáforo 🔴 ROJO (MAE &gt; umbral ±10%). El reentrenamiento usa una ventana rolling de 78 semanas (~18 meses). El nuevo modelo solo reemplaza al activo si su MAE en validación es menor. Si empeora, se hace rollback automático al modelo anterior.
+      </div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        ¿Por qué lag_1 tiene 80% de importancia y tallos_esp_ciclo solo 2.9%?
+        <span class="arr">+</span>
+      </button>
+      <div class="faq-a">
+        lag_1 (producción semana anterior, correlación 0.87 con el target) y tallos_esp_ciclo (ciclo biológico × retorno, correlación 0.78) tienen entre sí una correlación de 0.76 — multicolinealidad alta. LightGBM elige lag_1 por ser más predictivo directamente. Esto es un hallazgo documentado, no un error de diseño. tallos_esp_ciclo aporta información complementaria del ciclo biológico específico de cada variedad.
+      </div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        ¿Dónde queda guardada la predicción para que la use el pipeline siguiente?
+        <span class="arr">+</span>
+      </button>
+      <div class="faq-a">
+        En <code>rosas/reportes/YYYY_SS_reporte.xlsx</code>, hoja <strong>"prediccion"</strong>. El archivo se nombra con la semana en que se corrió. La siguiente semana, el pipeline busca ese archivo para recuperar la predicción del modelo y compararla con los reales ya disponibles.
+      </div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        ¿Las secciones 1-4 hay que correrlas cada semana?
+        <span class="arr">+</span>
+      </button>
+      <div class="faq-a">
+        No. Las secciones 1-4 (configuración, carga histórica, FE y entrenamiento) se corren solo la primera vez o cuando se actualiza el dataset histórico. Cada lunes solo se corre la sección 5 en adelante (pipeline semanal). Si el entorno de Colab se reinició, hay que volver a correr las secciones 1-4 para recargar las variables en memoria.
+      </div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        ¿Qué significa el semáforo 🔴 ROJO en una serie?
+        <span class="arr">+</span>
+      </button>
+      <div class="faq-a">
+        El error porcentual del modelo para esa serie supera el umbral crítico de ±15%. Significa que esa serie tiene alta incertidumbre y la predicción debe ser revisada manualmente por el experto antes de comprometer el volumen con ventas. Semanas con muchas series en 🔴 pueden activar el reentrenamiento automático.
+      </div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        ¿Qué es FloriExport S.A. / FE-A-1A?
+        <span class="arr">+</span>
+      </button>
+      <div class="faq-a">
+        Son nombres ficticios usados para proteger la confidencialidad de la empresa real (Grupo Elite Ecuador, finca BR-1A). Todos los datos, modelos y resultados son reales — solo los nombres han sido anonimizados para el entorno académico de la UEES.
+      </div>
+    </div>
+  </div>
+</section>
+
+</div><!-- container -->
+
+<footer>
+  <strong>Sistema Predictivo de Rosas — FloriExport S.A.</strong> · 
+  UEES Maestría en IA 2026 · Grupo 14 · 
+  Enrique Pérez &amp; Fredy Aguirre · 
+  Tutora: Mgs. Alexandra Arciniegas Coral
+</footer>
+
+<script>
+function showTab(id) {
+  document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  event.target.classList.add('active');
+}
+function showExcel(id) {
+  document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  event.target.classList.add('active');
+}
+function toggleFaq(btn) {
+  const ans = btn.nextElementSibling;
+  const isOpen = ans.classList.contains('open');
+  document.querySelectorAll('.faq-a').forEach(a => a.classList.remove('open'));
+  document.querySelectorAll('.faq-q').forEach(b => b.classList.remove('open'));
+  if (!isOpen) { ans.classList.add('open'); btn.classList.add('open'); }
+}
+// Nav active on scroll
+const sections = document.querySelectorAll('section[id]');
+const navLinks = document.querySelectorAll('nav a');
+window.addEventListener('scroll', () => {
+  let cur = '';
+  sections.forEach(s => { if (window.scrollY >= s.offsetTop - 100) cur = s.id; });
+  navLinks.forEach(a => {
+    a.classList.toggle('active', a.getAttribute('href') === '#'+cur);
+  });
+});
+</script>
+</body>
+</html>
